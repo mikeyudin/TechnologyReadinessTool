@@ -1,0 +1,222 @@
+@charset "utf-8";
+
+
+/* BASE / CORE CSS FOR FIXED WIDTH, THREE-COLUMN, CENTER COLUMN ELASTIC LAYOUT
+-------------------------------------------------------------------------------------*/
+
+
+/* ----- CONTENTS -------------------------------------------------------- */
+
+	/*
+	1. Shorthand / Multiple Areas
+	2. Header
+	3. Navigation
+	4. Columns
+	5. Footer
+	*/
+
+
+/* ----- SHORTHAND / MULTIPLE AREAS -------------------------------------- */
+
+#header-alpha,
+#header-beta #header-column-alpha #container-content-alpha #header-beta-cc-beta,
+#header-beta #header-column-alpha #container-content-alpha #header-beta-cc-gamma,
+#navigation-delta {
+	display: none;
+}
+
+#page-header-layer-alpha, #page-navigation-layer-alpha, #page-content-layer-alpha, #footer-alpha {
+	padding-left: 7px;
+	margin-left: -7px;
+	padding-right: 7px;
+	margin-right: -7px;
+}
+
+/* IE [VERSION 6] FIX */
+* html #page-header-layer-alpha,
+* html #page-navigation-layer-alpha,
+* html #page-content-layer-alpha,
+* html #footer-alpha {
+	padding-left: 0;
+	margin-left: 0;
+	padding-right: 0;
+	margin-right: 0;
+}
+
+/* IE [VERSION 7] FIX */
+*:first-child+html #page-header-layer-alpha,
+*:first-child+html #page-navigation-layer-alpha,
+*:first-child+html #page-content-layer-alpha,
+*:first-child+html #footer-alpha {
+	width: 100%;
+}
+
+
+/* ----- HEADER ---------------------------------------------------------- */
+
+#header-column-alpha img {
+	margin: 17px 0 0 18px;
+	clip: rect(0px,50px,51px,0px);
+	height: 50px;
+}
+
+* html #header-column-alpha img {
+	height: 50px;
+}
+
+#header-column-alpha #container-content-alpha #header-beta-cc-alpha {
+	margin: 25px 14px 0;
+}
+
+#header-column-beta {
+	margin-right: 18px;
+}
+
+#header-column-beta div {
+	width: 100%;
+	text-align: right;
+	float: right;
+}
+
+#header-column-beta #container-content-alpha {
+	margin-top: 4px;
+}
+
+#header-column-beta #container-content-beta {
+	margin-top: 41px;
+}
+
+
+/* ----- NAVIGATION ------------------------------------------------------ */
+
+#navigation-beta {
+
+}
+
+#navigation-gamma {
+	
+}
+
+
+/* DO NOT SET WIDTHS OF ANY COLUMN WITHIN THIS FILE
+   TO CHANGE, GO TO /theme/<your theme>/layout/mod-content-column-sizes.css */
+/* DO NOT SET ANY VALUES FOR IDs "#content-column-alpha", "#content-column-beta"
+   AND "#content-column-gamma" <-- THESE CONTAINERS ARE FOR LAYOUT ONLY */
+
+/* ----- CONTENT COLUMNS: SHARED CLASSES --------------------------------- */
+#page-content-layer-alpha {
+	background: url(images/background/layer-2a.png) no-repeat top left;
+}
+	
+/* IE6 [VERSION 6] FEX 
+* html #page-content-layer-alpha {
+	background: transparent;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='theme/2011-default/images/background/layer-2a.png',sizingMethod='image');
+}*/
+
+#page-content-layer-beta {
+	background: url(images/background/layer-2b.png) no-repeat top right;
+}
+	
+/* IE6 [VERSION 6] FEX 
+* html #page-content-layer-beta {
+	background: transparent;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='theme/2011-default/images/background/layer-2b.png',sizingMethod='image');
+}*/
+
+#page-content-layer-gamma {
+	background: #fff;
+	min-height: 450px;
+	padding-left: 20px;
+}
+
+/* IE [VERSION 6] FIX */
+* html #page-content-layer-gamma {
+	height: expression(this.offsetHeight <= 450? "450px": "auto" ); /* IE6 min-height of outer content container */
+}
+
+.c-column {
+	overflow: hidden;
+}
+
+
+/* ----- CONTENT COLUMN: DATA TREE --------------------------------------- */
+
+#cb-content {
+	
+}
+
+
+/* ----- CONTENT COLUMN: MAIN CONTENT ------------------------------------ */
+
+#data-layout-options,
+#data-view-by-options {
+	display: none;
+}
+
+#ca-content {
+	
+}
+
+
+/* ----- CONTENT COLUMN: HELP -------------------------------------------- */
+
+#cg-content {
+	
+}
+
+#cg-content #column-title-gamma,
+#cg-content #sub-title-alpha,
+#cg-content #data-alpha {
+	
+}
+
+#cg-content #column-title-gamma {
+	
+}
+
+#cg-content #sub-title-alpha {
+	
+}
+
+
+/* ----- FOOTER ---------------------------------------------------------- */
+
+#footer-alpha {
+	margin: 30px 13px;
+}
+
+#footer-alpha div {
+	display:inline;
+	float:left;
+}
+
+#footer-alpha #container-content-beta {
+	font-size: x-small;
+}
+
+#footer-alpha #footer-alpha-cc-alpha {
+	color: #797979;
+	margin-right: 5px;
+}
+
+#footer-beta {
+	background: #FF00FF;
+}
+
+
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+
+/* ----- CSS GUIDELINES & COMPRESS THIS CSS FILE ----- */
+
+	/*
+	CSS Guidelines: http://chalkboard.ic.ncs.com/confluence/pages/viewpage.action?pageId=51650000
+	
+	Do not forget to duplicate and compress this CSS file for production.  Compress
+	removes comments and extra lines, thus reducing overall file sizes and optimizes
+	front-end performance and response times.
+	
+	Example: http://www.cssdrive.com/index.php/main/csscompressor
+	*/

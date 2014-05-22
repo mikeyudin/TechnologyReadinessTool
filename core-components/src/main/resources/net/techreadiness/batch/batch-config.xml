@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+    <import resource="org-batch-import.xml" />
+    <import resource="org-batch-export.xml" />
+    
+    <import resource="user-batch-import.xml" />
+    <import resource="user-batch-export.xml" />
+
+    <import resource="device-batch-import.xml" />   
+    <import resource="device-batch-export.xml" />
+    
+    <import resource="org-info-export.xml" />   
+    <import resource="org-info-import.xml" />
+    
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+      <property name="scopes">
+          <map>
+              <entry key="thread">
+                  <bean class="org.springframework.context.support.SimpleThreadScope"/>
+              </entry>
+          </map>
+      </property>
+    </bean>
+        
+    <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+    
+    <bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry" />
+	</bean>
+	
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+		<property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
+		<property name="dataSource" ref="dataSource"/>
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="tablePrefix" value="core_batch.BATCH_" />
+	</bean>
+	
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+	<bean id="blackHoleWriter" class="net.techreadiness.batch.BlackHoleItemWriter" />
+	
+	<bean id="defaultLineMapper" class="org.springframework.batch.item.file.mapping.PassThroughLineMapper" />
+	
+	<bean id="defaultItemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+		<property name="linesToSkip" value="1" />
+		<property name="lineMapper" ref="defaultLineMapper" />
+		<property name="resource" value="#{jobParameters['jobFileName']}" />
+	</bean>
+	
+	<bean abstract="true" id="abstractServiceContextProvider">
+		<property name="fileId" value="#{jobParameters['jobFileId']}" />
+		<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+		<property name="userId" value="#{jobParameters['jobUserId']}" />
+		<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+		<property name="jobMode" value="#{jobParameters['jobMode']}" />
+	</bean>
+	
+	<bean id="coreItemListener" parent="abstractServiceContextProvider" class="net.techreadiness.batch.CoreItemListener" scope="step">
+	    <property name="fileName" value="#{jobParameters['jobFileName']}" />
+	</bean>
+	
+	<bean id="itemCountStepListener" parent="abstractServiceContextProvider" class="net.techreadiness.batch.listener.ItemCountStepListener" scope="step" />
+	
+	<bean id="fileFormatStepListener" parent="abstractServiceContextProvider" class="net.techreadiness.batch.listener.FileFormatStepListener" scope="step" />
+	
+	<bean id="fileStatusStepListener" parent="abstractServiceContextProvider" class="net.techreadiness.batch.listener.FileStatusStepListener" scope="step" />
+	
+	<bean id="exportStepListener" parent="abstractServiceContextProvider" class="net.techreadiness.batch.listener.ExportStepListener" scope="step" />
+	
+	<bean id="jobCompletionListener" class="net.techreadiness.batch.listener.JobCompletionListener" scope="thread">
+		<aop:scoped-proxy/>
+	</bean>
+	
+	<bean id="alwaysSkipPolicy" class="org.springframework.batch.core.step.skip.AlwaysSkipItemSkipPolicy" />
+</beans>

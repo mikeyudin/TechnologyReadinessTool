@@ -1,0 +1,95 @@
+@charset "utf-8";
+
+
+#workflow-alpha {
+	margin: 15px 20px 0;
+}
+#workflow-content {
+	border:#f0f0f0 1px solid;
+	background:#fff;
+	margin: 20px auto;
+}
+#workflow-progress {
+	
+}
+*#workflow-progress {
+	margin-left:1px;
+	font-size: 95%;
+}
+
+#workflow-progress ul {
+	padding: 0 0; /*10px*/
+}
+
+#workflow-progress ul li {
+	margin-left: -1px;
+}
+
+#workflow-progress a {
+	display: block;
+	border: #f1f1f1 solid 1px;
+	padding: 9px 1px 0; /*padding: 9px 8px 0;*/
+	text-decoration: none;
+}
+
+#workflow-progress a span {
+	color: #404040;
+	white-space: nowrap;
+	margin-bottom: -5px;
+	padding: 0 10px 11px;
+}
+
+#workflow-progress li.workflow-progress-selected span,
+#workflow-progress li.workflow-progress-selected a:hover span {
+	color: #004892;
+	font-weight: bold;
+	background: url(images/navigation/tasknav.png) no-repeat bottom left;
+	background-position: 0 100%;
+}
+
+/* IE [VERSION 6] FIX - STUCK SPAN HOVER */
+* html #workflow-progress a:hover {
+	background: 0 0;
+}
+
+#workflow-progress a:hover span,
+#workflow-progress li.workflow-progress-touched span,
+#workflow-progress li.workflow-progress-touched a:hover span {
+	background: url(images/navigation/tasknav.png) no-repeat bottom left;
+	background-position: -350px 100%;
+}
+
+#workflow-progress li.workflow-progress-touched span,
+#workflow-progress li.workflow-progress-touched a:hover span {
+	font-weight: bold;
+}
+
+	/* MAKE SECONDARY NAVIGATION SMALLER */
+	#workflow-progress .x-small-navigation a span {
+		padding-right: 3px;
+		padding-left: 3px;
+	}
+	
+	#workflow-progress .x-small-navigation .navigation-gamma-pipe {
+		height: 14px;
+	}
+	
+	/* MAKE SECONDARY NAVIGATION lARGER */
+	#workflow-progress .medium-large-navigation a span {
+		padding-right: 9px;
+		padding-left: 9px;
+	}
+	
+	#workflow-progress .medium-large-navigation .navigation-gamma-pipe {
+		height: 18px;
+	}
+	
+#workflow-header {
+	padding: 5px 0 5px 7px;
+	background: #f0f0f0;
+}
+	
+#workflow-footer {
+	padding: 5px 0 5px 7px;
+	border-top: #f0f0f0 solid 1px;
+}

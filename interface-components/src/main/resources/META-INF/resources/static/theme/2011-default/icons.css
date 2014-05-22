@@ -1,0 +1,623 @@
+@charset "utf-8";
+
+/* ICONS: LOAD CONTAINING IMAGE SPRITES, SET DIMENTIONS, SET POSITIONS WITHIN SPRITES
+-------------------------------------------------------------------------------------
+ICON DESCRIPTIONS: http://chalkboard.ic.ncs.com/confluence/display/ce/Icons+Descriptions */
+
+/* ----- SPRITES: LOAD IMAGE COLLECTIONS --------------------------------- */
+.icons-16x16 {
+	width: 16px;
+	height: 16px;
+	background-image: url(images/icons/16x16.png);
+	vertical-align: text-bottom;
+	display: inline-block;
+} /* this sets icon width and height and background image source */
+.icons-16x16 a {
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+	/* this sets icon anchor / link width and height and display:block to enable a link to size */
+/*.icons-24x16 { width: 24px; height: 16px; background-image: url(images/icons/24x16.png); }
+.icons-24x16 a { display: block; height: 24px; width: 16px; }*/
+/*.icons-32x32 { width: 32px; height: 32px; background-image: url(images/icons/32x32.png);
+.icons-32x32 a { display: block; height: 32px; width: 32px; } }
+.icons-64x64 { width: 64px; height: 64px; background-image: url(images/icons/64x64.png); }
+.icons-64x64 a { display: block; height: 64px; width: 64px; }*/
+.icons-abnormal-sizes {
+	background-image: url(images/icons/abnormal-sizes.png);
+} /* you still have to set width and height for each icon below */
+.inline-icon-right {
+	display: inline-block;
+}
+	/* Margins still need to be applied to each icon, for example: margin: 0.25em 0 0; */
+.inline-icon-left {
+	display: inline-block;
+}
+	/* Margins still need to be applied to each icon, for example: margin: 0.1em 0.15em 0; */
+
+/* ----- ICONS: 16px x 16px ---------------------------------------------- */
+.QA {
+	background-position: 0 0;
+}
+
+.active {
+	background-position: 0 -112px;
+}
+
+.add-to-cart {
+	background-position: 0 -228px;
+}
+
+.addSession {
+	background-position: 0 -340px;
+}
+
+.addStudent {
+	background-position: 0 -453px;
+}
+
+.calendarIcon {
+	background-position: 0 -567px;
+}
+
+.cart {
+	background-position: 0 -678px;
+}
+
+.check {
+	background-position: 0 -789px;
+}
+
+.completed {
+	background-position: 0 -902px;
+}
+
+.copy {
+	background-position: 0 -1018px;
+}
+
+.disabled {
+	background-position: 0 -1130px;
+}
+
+.document {
+	background-position: 0 -1240px;
+}
+
+.download {
+	background-position: 0 -1354px;
+}
+
+.edit-all {
+	background-position: 0 -1468px;
+}
+
+.edit-multiple {
+	background-position: 0 -1579px;
+}
+
+.editpencil {
+	background-position: 0 -1688px;
+}
+
+.email {
+	background-position: 0 -1799px;
+}
+
+.exited {
+	background-position: -116px 0;
+}
+
+.export {
+	background-position: -116px -114px;
+}
+
+.fixed-width {
+	background-position: -116px -228px;
+}
+
+.folder {
+	background-position: -116px -339px;
+}
+
+.full-width {
+	background-position: -116px -450px;
+}
+
+.group {
+	background-position: -116px -561px;
+}
+
+.import {
+	background-position: -116px -673px;
+}
+
+.markedcomplete {
+	background-position: -116px -787px;
+}
+
+.mergerecords {
+	background-position: -116px -902px;
+}
+
+.moreinfo {
+	background-position: -116px -1016px;
+}
+
+.moveStudent {
+	background-position: -116px -1129px;
+}
+
+.moveTest {
+	background-position: -116px -1244px;
+}
+
+.newSession {
+	background-position: -116px -1358px;
+}
+
+.notstarted {
+	background-position: -116px -1473px;
+}
+
+.open-lightbox-window {
+	background-position: -116px -1588px;
+}
+
+.pdf {
+	background-position: -116px -1698px;
+}
+
+.ppt {
+	background-position: -116px -1812px;
+}
+
+.printer {
+	background-position: -232px 0;
+}
+
+.processing {
+	background-position: -232px -113px;
+}
+
+.proctor {
+	background-position: -232px -227px;
+}
+
+.proctorcaching {
+	background-position: -232px -340px;
+}
+
+.ready {
+	background-position: -232px -453px;
+}
+
+.remove-from-cart {
+	background-position: -232px -568px;
+}
+
+.removeSession {
+	background-position: -232px -681px;
+}
+
+.removeStudent {
+	background-position: -232px -794px;
+}
+
+.removeStudentRegistration {
+	background-position: -232px -908px;
+}
+
+.reports {
+	background-position: -232px -1022px;
+}
+
+.resetpassword {
+	background-position: -232px -1136px;
+}
+
+.resume {
+	background-position: -232px -1248px;
+}
+
+.resumed {
+	background-position: -232px -1361px;
+}
+
+.revision-history {
+	background-position: -232px -1477px;
+}
+
+.splitrecords {
+	background-position: -232px -1593px;
+}
+
+.stop {
+	background-position: -232px -1705px;
+}
+
+.student {
+	background-position: -232px -1813px;
+}
+
+.submitted {
+	background-position: -348px 0;
+}
+
+.testinvalid {
+	background-position: -348px -114px;
+}
+
+.tools {
+	background-position: -348px -229px;
+}
+
+.training {
+	background-position: -348px -342px;
+}
+
+.undo {
+	background-position: -348px -457px;
+}
+
+.unlock {
+	background-position: -348px -570px;
+}
+
+.upload {
+	background-position: -348px -682px;
+}
+
+.url {
+	background-position: -348px -796px;
+}
+
+.warning {
+	background-position: -348px -911px;
+}
+
+.xls {
+	background-position: -348px -1024px;
+}
+
+.zip {
+	background-position: -348px -1138px;
+}
+
+.magnifying-glass {
+	background-position: -348px -1251px;
+}
+
+.delete {
+	background-position: -348px -1360px;
+}
+
+.showgraph {
+	background-position: -348px -1476px;
+}
+
+.hidegraph {
+	background-position: -348px -1592px;
+}
+
+.graph {
+	background-position: -348px -1708px;
+}
+
+.orgchart {
+	background-position: -348px -1822px;
+}
+
+/* ----- ICONS: 24px x 16px ---------------------------------------------- */
+
+/* ----- ICONS: 32px x 32px ---------------------------------------------- */
+
+/* ----- ICONS: 64px x 64px ---------------------------------------------- */
+
+/* ----- ICONS: ABNORMAL SIZES ------------------------------------------- */
+.auto-save {
+	background-position: 0 0;
+	width: 16px;
+	height: 10px;
+}
+
+.auto-save a {
+	display: block;
+	height: 16px;
+	width: 10px;
+}
+
+.checkBig {
+	background-position: 0 -110px;
+	width: 36px;
+	height: 36px;
+}
+
+.checkBig a {
+	display: block;
+	height: 36px;
+	width: 36px;
+}
+
+/* Empty cell in abnormal-sizes.png file
+.delete{ background-position: 0 -246px; width: 11px; height: 11px; } 
+.delete a { display: block; height: 11px; width: 11px; }*/
+.deleteBig {
+	background-position: 0 -357px;
+	width: 35px;
+	height: 36px;
+}
+
+.deleteBig a {
+	display: block;
+	height: 35px;
+	width: 36px;
+}
+
+.double_angle {
+	background-position: 0 -493px;
+	width: 6px;
+	height: 6px;
+}
+
+.double_angle a {
+	display: block;
+	height: 6px;
+	width: 6px;
+}
+
+.dropdown {
+	background-position: 0 -599px;
+	width: 8px;
+	height: 6px;
+}
+
+.dropdown a {
+	display: block;
+	height: 8px;
+	width: 6px;
+}
+
+.dropdownRight {
+	background-position: 0 -705px;
+	width: 6px;
+	height: 8px;
+}
+
+.dropdownRight a {
+	display: block;
+	height: 6px;
+	width: 8px;
+}
+
+.help {
+	background-position: 0 -813px;
+	width: 6px;
+	height: 8px;
+}
+
+.help a {
+	display: block;
+	height: 6px;
+	width: 8px;
+}
+
+.inline-cancel {
+	background-position: 0 -921px;
+	width: 9px;
+	height: 9px;
+}
+
+.inline-cancel a {
+	display: block;
+	height: 9px;
+	width: 9px;
+}
+
+.inline-save {
+	background-position: 0 -1030px;
+	width: 11px;
+	height: 11px;
+}
+
+.inline-save a {
+	display: block;
+	height: 11px;
+	width: 11px;
+}
+
+.left-arrow-blue {
+	background-position: 0 -1141px;
+	width: 7px;
+	height: 10px;
+}
+
+.left-arrow-blue a {
+	display: block;
+	height: 7px;
+	width: 10px;
+}
+
+.minus {
+	background-position: 0 -1251px;
+	width: 6px;
+	height: 2px;
+}
+
+.minus a {
+	display: block;
+	height: 6px;
+	width: 2px;
+}
+
+.newStudentRegistration {
+	background-position: 0 -1353px;
+	width: 17px;
+	height: 14px;
+}
+
+.newStudentRegistration a {
+	display: block;
+	height: 17px;
+	width: 14px;
+}
+
+.play {
+	background-position: 0 -1467px;
+	width: 8px;
+	height: 10px;
+}
+
+.play a {
+	display: block;
+	height: 8px;
+	width: 10px;
+}
+
+.plus-large {
+	background-position: 0 -1577px;
+	width: 11px;
+	height: 11px;
+}
+
+.plus-large a {
+	display: block;
+	height: 11px;
+	width: 11px;
+}
+
+.plus {
+	background-position: 0 -1688px;
+	width: 6px;
+	height: 6px;
+}
+
+.plus a {
+	display: block;
+	height: 6px;
+	width: 6px;
+}
+
+.right-arrow-blue {
+	background-position: 0 -1794px;
+	width: 7px;
+	height: 10px;
+}
+
+.right-arrow-blue a {
+	display: block;
+	height: 7px;
+	width: 10px;
+}
+
+.rightHead_close {
+	background-position: -136px 0;
+	width: 9px;
+	height: 7px;
+}
+
+.rightHead_close a {
+	display: block;
+	height: 9px;
+	width: 7px;
+}
+
+.rightHead_open {
+	background-position: -136px -107px;
+	width: 9px;
+	height: 7px;
+}
+
+.rightHead_open a {
+	display: block;
+	height: 9px;
+	width: 7px;
+}
+
+.right_close {
+	background-position: -136px -214px;
+	width: 8px;
+	height: 5px;
+}
+
+.right_close a {
+	display: block;
+	height: 8px;
+	width: 5px;
+}
+
+.right_open {
+	background-position: -136px -319px;
+	width: 8px;
+	height: 5px;
+}
+
+.right_open a {
+	display: block;
+	height: 8px;
+	width: 5px;
+}
+
+.sortAscending {
+	background-position: -136px -424px;
+	width: 7px;
+	height: 8px;
+}
+
+.sortAscending a {
+	display: block;
+	height: 7px;
+	width: 8px;
+}
+
+.sortDescending {
+	background-position: -136px -532px;
+	width: 7px;
+	height: 8px;
+}
+
+.sortDescending a {
+	display: block;
+	height: 7px;
+	width: 8px;
+}
+
+.warningBig {
+	background-position: -136px -640px;
+	width: 39px;
+	height: 34px;
+}
+
+.warningBig a {
+	display: block;
+	height: 39px;
+	width: 34px;
+}
+
+.dropdown-white {
+	background-position: -136px -774px;
+	width: 8px;
+	height: 6px;
+}
+
+.dropdown-white a {
+	display: block;
+	height: 8px;
+	width: 6px;
+}
+
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+/* ----- CSS GUIDELINES & COMPRESS THIS CSS FILE ----- */
+
+/*
+	CSS Guidelines: http://chalkboard.ic.ncs.com/confluence/pages/viewpage.action?pageId=51650000
+	
+	Do not forget to duplicate and compress this CSS file for production.  Compress
+	removes comments and extra lines, thus reducing overall file sizes and optimizes
+	front-end performance and response times.
+	
+	Example: http://www.cssdrive.com/index.php/main/csscompressor
+	*/

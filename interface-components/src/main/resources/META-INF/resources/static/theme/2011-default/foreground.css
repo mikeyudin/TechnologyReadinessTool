@@ -1,0 +1,112 @@
+@charset "utf-8";
+
+/* BASE / CORE CSS FOR FIXED WIDTH, THREE-COLUMN, CENTER COLUMN ELASTIC LAYOUT
+-------------------------------------------------------------------------------------*/
+
+/* ----- SHORTHAND / MULTIPLE AREAS -------------------------------------- */
+#header-beta #header-column-alpha #container-content-alpha #header-beta-cc-beta,#header-beta #header-column-alpha #container-content-alpha #header-beta-cc-gamma,#navigation-delta
+	{
+	display: none;
+}
+
+/* ----- HEADER ---------------------------------------------------------- */
+#header-beta #header-column-alpha img {
+	margin: 0 0 10px 5px;
+	height: 40px;
+}
+
+* html #header-beta #header-column-alpha img {
+	height: 50px;
+}
+
+#header-beta #header-column-alpha #container-content-alpha #header-beta-cc-alpha
+	{
+	margin: 8px 14px 25px;
+}
+
+/* DO NOT SET WIDTHS OF ANY COLUMN WITHIN THIS FILE
+   TO CHANGE, GO TO /theme/<your theme>/layout/mod-content-column-sizes.css */
+/* DO NOT SET ANY VALUES FOR IDs "#content-column-alpha", "#content-column-beta"
+   AND "#content-column-gamma" <-- THESE CONTAINERS ARE FOR LAYOUT ONLY */
+
+/* ----- CONTENT COLUMNS: SHARED CLASSES --------------------------------- */
+/*#page-content-layer-alpha {
+	background: url(images/background/layer-2a.png) no-repeat top left;
+}*/
+
+/* IE6 [VERSION 6] FIX */
+* html #page-content-layer-alpha {
+	background: #fff;
+}
+
+/*#page-content-layer-beta {
+	background: url(images/background/layer-2b.png) no-repeat top right;
+}*/
+
+/* IE6 [VERSION 6] FIX */
+* html #page-content-layer-beta {
+	background: none;
+	height: expression(this.offsetHeight <=   450 ?   "450px" :   "100%");
+}
+
+#page-content-layer-gamma {
+	background: #fff;
+	min-height: 450px;
+}
+
+#page-content-layer-delta {
+	padding-top: 5px;
+	/* Controls right & left side padding of content container */
+}
+
+#ca-content {
+	padding: 10px 15px;
+	/* Controls right & left side padding of content container */
+}
+
+.c-column {
+	overflow: hidden;
+}
+
+/* ----- CONTENT COLUMN: MAIN CONTENT ------------------------------------ */
+#data-layout-options,#data-view-by-options {
+	display: none;
+}
+
+/* ----- FOOTER ---------------------------------------------------------- */
+#footer-alpha {
+	margin: 23px 12px 5px;
+	height: 8em;
+}
+
+/* IE [VERSION 6] FIX */
+* html #footer-alpha {
+	padding-left: 20px;
+}
+
+#footer-alpha div {
+	margin-top: 2px;
+}
+
+#footer-alpha #container-content-beta {
+	font-size: 80%;
+}
+
+#footer-alpha #footer-alpha-cc-alpha {
+	color: #797979;
+	margin-right: 5px;
+}
+
+#footer-alpha #container-content-gamma {
+	display: none;
+}
+
+#footer-alpha #container-content-gamma {
+	display: block;
+	margin: 13px 0 0 2px;
+	clear: both;
+}
+
+#footer-beta {
+	background: #004890;
+}

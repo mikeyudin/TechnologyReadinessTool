@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+/* CSS CLASSES
+-------------------------------------------------------------------------------------*/
+.ui-helper-cleaner{ clear: both; width: 100%; overflow: hidden; height: 1px; margin-top: -1px; }
+
+* html .ui-helper-clearfix{ height: 1%; overflow: visible; } /* float clearing for IE6 */
+*+html .ui-helper-clearfix{ min-height: 1%; } /* float clearing for IE7 */
+.ui-helper-clearfix:after{ clear: both; content: "."; display: block; height: 0; visibility: hidden; } /* float clearing for everyone else */
+
+.ui-helper-hidden{ display: none; }
+.ui-helper-i-show{ display: inline; }
+.ui-helper-b-show{ display: block; }
+
+.ui-helper-accessible-hidden{ position: absolute; left: -9999px; }
+.ui-helper-accessible-show{ position: static; left: auto;}
+
+.ui-helper-zfix{ width: 100%; height: 100%; top: 0; left: 0; position: absolute; opacity: 0; filter: Alpha(Opacity=0); }
+
+
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+
+/*
+Class names work with JQuery containers.  .ui-helper-cleaner and .ui-helper-clearfix classes are not the same
+as JQuery classes, but are accepted as equivalent or better.
+*/
+
+
+/* ----- CLEANER ----- */
+
+	/*
+	".cleaner" / CLEAR FLOATS OF DIV USING EMPTY DIV WITH CLEANER CLASS FORCES
+	HEIGHT OF DIVS TO EXTEND FULLY, NOT JUST TO BOTTOM OF THE CONTENT WITHIN IT */
+	
+	/* ".cleaner" HTML IMPLEMENTATION EXAMPLE
+	(WHERE SIDEBAR AND CONTENT CLASSES ARE BOTH FLOAT:LEFT;):
+	 <div id="main">
+	  <div id="inner">
+	   <div id="sidebar">>
+	   </div>
+	   <div id="content">
+	   </div>
+	   <div class="cleaner"></div>    <----- USE OF EMPTY DIV WITH CLEANER CLASS
+	  </div>
+	 </div>
+	*/
+
+
+/* ----- CLEARFIX ----- */
+
+	/*
+	".clearfix" - USE THIS FIX IF A FLOATED ELEMENT'S HEIGHT WITHIN ITS PARENT CONTAINER
+	IS GREATER THAN THE PARENT, BUT PARENT DOESN'T GROW TO AUTOMATICALLY MATCH CHILD HEIGHT.
+	Applies float wrapping properties to parent elements. */
+	
+	/*HTML IMPLEMENTATION EXAMPLE:
+	<div id="container" class="clearfix">
+	  <div id="rail" style="float: left;"></div>
+	  <div id="content" style="float: left;"></div>
+	</div>
+	*/
+
+
+/* ----- HIDDEN & SHOW ----- */
+
+	/*
+	Hides any html element or shows any html element with various display values.
+	*/
+
+
+/* ----- HIDDEN- & SHOW-ACCESSIBLE ----- */
+
+	/*
+	Hides or shows any html element AND works with a screen readers.
+	
+	Applies accessible hiding to elements (via abs positioning off the page).
+	*/
+
+
+/* ----- ZFIX ----- */
+
+	/*
+	Applies iframe "fix" css to iframe elements when needed in overlays.
+	*/

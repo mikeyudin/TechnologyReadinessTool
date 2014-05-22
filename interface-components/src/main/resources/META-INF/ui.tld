@@ -1,0 +1,1426 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description><![CDATA[
+<p>The tags in this library have support for displaying ViewFields in multiple formats.  Data 
+can be displayed in table format with single row edit, multiple row edit and read only modes.  Form 
+layout is also possible with edit and readonly modes as well.  All of the field level display of 
+information allows the page author to include their own fields in addition to the ones configured 
+in the ViewDef.</p><h3>ViewDef</h3><p>The easiest way to get a ViewDef is through the net.techreadiness.service.ConfigService.  If 
+the service does not find a ViewDef defined for the supplied parameters, the default behavior is 
+to return all of the fields configurted for that type of object.</p>
+		]]>
+	</description>
+	<display-name>Interface Components</display-name>
+	<tlib-version>1.2</tlib-version>
+	<short-name>ui</short-name>
+	<uri>http://techreadiness.net/components</uri>
+	
+	<tag>
+		<description>
+			<![CDATA[
+			Displays a collection of data in a grid (table) layout.  The tag supports:
+			<ul>
+				<li>Pagination</li>
+				<li>Sortable columns</li>
+				<li>Filtering</li>
+				<li>Row selection</li>
+			</ul>
+			<img src="../../images/example-datagrid.gif" />
+			]]>
+		</description>
+		<display-name>Core Data Grid</display-name>
+		<name>datagrid</name>
+		<tag-class>net.techreadiness.ui.tags.datagrid.DataGridTag</tag-class>
+
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>
+				<![CDATA[
+					The name that can be used in OGNL expressions to access the current object from the item provider.  The 
+					default value is "row".
+				]]>
+			</description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				<![CDATA[
+					The item provider is responsible for providing the total row count and the current page data to 
+					the data grid.
+				]]>
+			</description>
+			<name>itemProvider</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.DataGridItemProvider</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				<![CDATA[
+					The initial number of rows displayed in the data grid.  The default is 10.
+				]]>
+			</description>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				<![CDATA[
+					An OGNL expression that resolves to an instance of net.techreadiness.ui.tags.datagrid.DataGridState.  The object
+					has information such as the current page and page size for the grid.
+				]]>
+			</description>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				<![CDATA[
+					The expression for this attribute must resolve to an instance of the class "net.techreadiness.service.common.ViewDef".  The view definition defines the columns and column groupings that should 
+					be included in the data grid based off of the configuration for the current Scope.  If a column is in the ViewDef then it does not need to be hard coded in the JSP.
+				]]>
+			</description>
+			<name>viewDef</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.ViewDef</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If the value for 'paging' is true then the data grid will render the paging controls and the DataGridItemProvider should honor the page size 
+				and page number for the data grid.  If false, no paging controls will be rendered.  The default is 'true'.
+			</description>
+			<name>paging</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				An OGNL expression used to prefix the name expression for the form input tags.  This is only used for columns included by the ViewDef.  This only 
+				has an effect when the data grid is in edit mode (single row or multiple rows).
+			</description>
+			<name>fieldName</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				The Struts action name that should be executed when a "save" occurs during inline edit.  The current namespace is used.  For example if the page was rendered via "/namespace/listAction" and the value for 
+				'inlineSaveAction' is "save" then the namespace + action would "/namespace/save".
+			</description>
+			<name>inlineSaveAction</name>
+		</attribute>
+
+		<attribute>
+			<description>
+				An OGNL expression that represents a unique row identifier.  The expression should assume that the current row is at the top of the stack.  This is used when the data grid supports
+				row selection.
+			</description>
+			<name>rowValue</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				Value used to determine if the data grid supports a search field.  Default is false.
+			</description>
+			<name>searchable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If true, the data grid will allow the user to edit a single row at a time in the grid.  Default value is false.  For columns 
+				included on the JSP, they must render the appropriate control based on the 'editMode' variable.
+			</description>
+			<name>inlineEditable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If true a column of checkboxes will be rendered on the left side of the data grid.  This allows the user to select and deselect rows in the grid.  If the value is 
+				true then the 'rowValue' must also be specified.  Default value is false.
+			</description>
+			<name>selectable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<description>
+				If true, all checkboxes in the grid will be checked.  This allows the user to select and deselect all rows in the grid.  If the value is 
+				Default value is false.
+			</description>
+			<name>selectAllRows</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If true all rows in the data grid will be rendered as if in edit mode.  The default is 'false'.
+			</description>
+			<name>multiEditable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If true the data grid will render a link that allows the user to select which columns are rendered.  The columns from the ViewDef in addition to the ones hard
+				coded on the page are available for hiding or displaying.  The default value is 'false'.
+			</description>
+			<name>columnSelectable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				An OGNL expression that determines if the selection option should be disabled for the current row.
+			</description>
+			<name>selectedDisabledTest</name>
+		</attribute>
+
+		<attribute>
+			<description>disable alert when fields of the datagrid are changed and the page is reloaded</description>
+			<name>editAlertDisabled</name>
+		</attribute>
+		
+		<attribute>
+			<description>
+				This is a flag for setting the visibility of the required notation in the column header. If true it will display a styled * in the header
+				next to the column name. 
+			</description>
+			<name>showRequired</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<description>OGNL expression used to group multiple rows together.  If this is non-null the expression will be evaluated 
+			and compared to the value from the previous row.  If they are the same the column contents will not be rendered.  If they are 
+			different then the contents will be rendered.  The column is rendered 'onchange' of the evaluated result of the expression.
+			</description>
+			<name>groupExpression</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<description>The title for the table.  This will be rendered in the same row as the results but it will be aligned left.</description>
+			<name>title</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>
+			Defines a column that is used as a child of the ui:dataGrid tag.  The column defines the content of the header and the cell text for each row of the 
+			data grid.  Sorting behavior is also defined by this tag.
+		</description>
+		<name>dataGridColumn</name>
+		<tag-class>net.techreadiness.ui.tags.datagrid.DataGridColumnTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>The value to use for the column header text, if the attribute 'nameKey' is not specified.</description>
+			<name>name</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				The name of a value in a resource bundle, the value will be passed to the &lt;s:text /&gt; tag.  
+			</description>
+			<name>nameKey</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				Unique identifier for this column.  If the 'id' matches a entity field code in the ViewDef the column 
+				from the page will be rendered, not the one from the ViewDef.
+			</description>
+			<name>code</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				The width of the column.  Must be a valid CSS expression (%, em, px).
+			</description>
+			<name>width</name>
+		</attribute>
+		
+		<attribute>
+			<description>
+				If true the column will be rendered with a class that eliminates column padding. 
+			</description>
+			<name>hidden</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<name>displayOrder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				Pass thru CSS style that will be applied to both the datagrid TD elements for this column. 
+			</description>
+			<name>style</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				Pass thru CSS style that will be applied to both the datagrid TH elements for this column. 
+			</description>
+			<name>headerStyle</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<name>grouped</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<description>
+				If true the column will be rendered with a class that indicates required. 
+			</description>
+			<name>required</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<description>The text that should be used in the manage columns dropdown</description>
+			<name>manageColumnsText</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<description>If true the column can be hidden via the manage columns dropdown.  Default is true.</description>
+			<name>manageable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<example>
+&lt;ui:dataGridColumn id="orgType" nameKey="organization.list.orgTypeHeader"&gt;
+	&lt;s:property value="orgType.name"/&gt;
+&lt;/ui:dataGridColumn&gt;
+		</example>
+	</tag>
+
+
+	<tag>
+		<description>
+			This tag allows columns to be 'grouped' under a heading.  The heading is rendered above the column headings.
+		</description>
+		<name>dataGridColumnGroup</name>
+		<tag-class>net.techreadiness.ui.tags.datagrid.DataGridColumnGroupTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>User friendly text that will be used as a heading above the column headers.</description>
+			<name>name</name>
+		</attribute>
+		
+		<example>
+&lt;ui:datagrid value="groupsGrid"&gt;
+	&lt;ui:dataGridColumnGroup name="Group One"&gt;
+		&lt;ui:dataGridColumn name="Column A" id="columnA"&gt;
+			Column A
+		&lt;/ui:dataGridColumn&gt;
+		
+		&lt;ui:dataGridColumn name="Column B" id="columnB"&gt;
+			Column B
+		&lt;/ui:dataGridColumn&gt;
+	&lt;/ui:dataGridColumnGroup&gt;
+	
+	&lt;ui:dataGridColumnGroup name="Group Two"&gt;
+		&lt;ui:dataGridColumn name="First Name" id="firstName"&gt;
+			&lt;s:property value="firstName"/&gt;
+		&lt;/ui:dataGridColumn&gt;
+		
+		&lt;ui:dataGridColumn name="Last Name" id="lastName" sortable="false"&gt;
+			&lt;s:property value="lastName"/&gt;
+		&lt;/ui:dataGridColumn&gt;
+	&lt;/ui:dataGridColumnGroup&gt;
+&lt;/ui:datagrid&gt;
+		</example>
+	</tag>
+
+	<tag>
+		<description>
+			<![CDATA[
+			<p>A toolbar which can be displayed at the top of a ui:datagrid or a ui:fieldset.  The toolbar 
+			will format s:submit and s:a tags so they look the same.</p>
+			<img src="../../images/example-toolbar-fieldset.png" /><br />
+			<img src="../../images/example-toolbar-datagrid.png" />
+			]]>
+		</description>
+		<name>toolbar</name>
+		<tag-class>net.techreadiness.ui.tags.ToolbarTag</tag-class>
+		<body-content>scriptless</body-content>
+		<example>
+&lt;ui:fieldset title="User"&gt;
+	&lt;ui:toolbar&gt;
+		&lt;s:submit action="save"&gt;Save&lt;/s:submit&gt;
+		&lt;s:a action="list"&gt;Cancel&lt;/s:a&gt;
+	&lt;/ui:toolbar&gt;
+	&lt;ui:fieldsetRow id="username" name="username"&gt;
+		&lt;s:textfield name="user.username" label="Username" required="true" value="%{user.username}" /&gt;
+	&lt;/ui:fieldsetRow&gt;
+&lt;/ui:fieldset&gt;
+
+
+&lt;ui:datagrid value="userRoleDataGrid" itemProvider="${userRoleItemProvider}" var="userRole" paging="false" selectable="true"&gt;
+	&lt;ui:toolbar&gt;
+		&lt;s:a action="assign-role"&gt;Add
+			&lt;s:param name="userId" value="userId" /&gt;
+		&lt;/s:a&gt;
+		&lt;s:submit action="remove-role"&gt;Delete
+			&lt;s:param name="userId" value="userId" /&gt;
+		&lt;/s:submit&gt;
+	&lt;/ui:toolbar&gt;
+
+	&lt;ui:dataGridColumn name="Name" id="userRoleName"&gt;
+		&lt;s:property value="userRole.role.name" /&gt;
+	&lt;/ui:dataGridColumn&gt;
+	&lt;ui:dataGridColumn name="Short Name" id="userRoleShortName"&gt;
+		&lt;s:property value="userRole.role.shortName" /&gt;
+	&lt;/ui:dataGridColumn&gt;
+	&lt;ui:dataGridColumn name="Code" id="userRoleCode"&gt;
+		&lt;s:property value="userRole.role.code" /&gt;
+	&lt;/ui:dataGridColumn&gt;
+&lt;/ui:datagrid&gt;
+		</example>
+	</tag>
+	
+	<tag>
+		<name>dataGridHeader</name>
+		<tag-class>net.techreadiness.ui.tags.datagrid.DataGridHeader</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<description>
+			&lt;p&gt;Renders a list of rows in a form layout.  The tag is capable of displaying fields from a ViewDef or 
+			hard coded elements on the page.&lt;/p&gt;
+			&lt;h3&gt;Toolbars&lt;/h3&gt;
+			&lt;p&gt;A &lt;a href="toolbar.html">ui:toolbar&lt;/a> can be inclued as a child tag.  When a toolbar is specified the default 
+			location for it is at the top of the field set.  The same toolbar can be displayed at the bottom of the field set.&lt;/p&gt;
+			&lt;h3&gt;ViewDef&lt;/h3&gt;
+			&lt;p&gt;If a ViewDef is specified then the field set will render the fields in the defined columns.&lt;/p&gt;
+			&lt;h3&gt;Columns&lt;/h3&gt;
+			&lt;p&gt;Columns may be hard coded in the page or included via the ViewDef.  Columns from the two sources are not merged.&lt;/p&gt;
+			&lt;h3&gt;Rows&lt;/h3&gt;
+			&lt;p&gt;If a hard coded ui:fieldSetRow is not nested in a ui:fieldSetColumn, then the row will be 
+			included in the first column.  Hard coded rows will only override those defined in the ViewDef if they 
+			both appear in the same column.  Matching occurs based on the fieldSetRow 'name' attirbute and the ViewField code.&lt;/p&gt;
+			&lt;img src="../../images/example-fieldSet.png" /&gt;
+		</description>
+		<name>fieldset</name>
+		<tag-class>net.techreadiness.ui.tags.form.FieldSetTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>Text that will appear in the top toolbar if one is displayed.</description>
+			<name>title</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+				The value to prefix the 'name' attribute of input tags from the ViewDef.  If the field attribute 
+				is 'org', and the ViewField.code attribute is 'name', then the name for the input would be 'org.name'.
+			</description>
+			<name>field</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The ViewDef that contains the fields and columns that should be rendered as a part of the field set.</description>
+			<name>viewDef</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.ViewDef</type>
+		</attribute>
+
+		<attribute>
+			<description>If true, a toolbar will be displayed at the bottom of the field set.  Default is false.</description>
+			<name>bottomToolbar</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If true, all rows from the ViewDef will be rendered using s:property instead of an input field.
+			</description>
+			<name>readOnly</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>disable alert when fields of the fieldset are changed and the page is reloaded</description>
+			<name>editAlertDisabled</name>
+		</attribute>
+		
+		<attribute>
+			<description>
+				Prefix for the value attribute of input fields from the ViewDef.  If not specified it defaults to the value
+				of the 'field' attribute.
+			</description>
+			<name>var</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<example>
+&lt;s:form id="userForm" namespace="/user" action="edit"&gt;
+	&lt;s:hidden name="userId" /&gt;
+	&lt;ui:fieldset title="User" &gt;
+		&lt;ui:toolbar&gt;
+			&lt;s:submit action="save"&gt;Save&lt;/s:submit&gt;
+			&lt;s:a action="list"&gt;Cancel&lt;/s:a&gt;
+		&lt;/ui:toolbar&gt;
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield name="user.username" label="Username" required="true" value="%{user.username}" /&gt;
+		&lt;/ui:fieldsetRow&gt;
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield name="user.firstName" label="First Name" value="%{user.firstName}" /&gt;
+		&lt;/ui:fieldsetRow&gt;
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield name="user.lastName" label="Last Name" value="%{user.lastName}" /&gt;
+		&lt;/ui:fieldsetRow&gt;
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield name="user.email" label="Email" value="%{user.email}" /&gt;
+		&lt;/ui:fieldsetRow&gt;		
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield id="user.activeBeginDate" name="user.activeBeginDateString" label="Active Begin Date" cssClass="datepicker" value="%{user.activeBeginDateString}"/&gt;    		  
+		&lt;/ui:fieldsetRow&gt;		
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield id="user.activeEndDate" name="user.activeEndDateString" label="Active End Date" cssClass="datepicker" value="%{user.activeEndDateString}"/&gt;    
+		&lt;/ui:fieldsetRow&gt;						
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield id="user.disableDate" name="user.disableDateString" label="Disable Date" cssClass="datepicker" value="%{user.disableDateString}"/&gt;    
+		&lt;/ui:fieldsetRow&gt;					
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield name="user.disableReason" label="Disable Reason" value="%{user.disableReason}" /&gt;
+		&lt;/ui:fieldsetRow&gt;				
+		&lt;ui:fieldsetRow&gt;
+			&lt;s:textfield id="user.deleteDate" name="user.deleteDateString" label="Deleted Date" cssClass="datepicker" value="%{user.deleteDateString}"/&gt;    
+		&lt;/ui:fieldsetRow&gt;
+	&lt;/ui:fieldset&gt;
+&lt;/s:form&gt;
+		</example>
+	</tag>
+	
+	<tag>
+		<name>fieldsetColumn</name>
+		<tag-class>net.techreadiness.ui.tags.form.FieldSetColumnTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<name>width</name>
+		</attribute>
+		<attribute>
+			<name>labelWidth</name>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>
+			Renders a row in a field set.  This usually represents a form and the row contains a label and an input tag.
+		</description>
+		<name>fieldsetRow</name>
+		<tag-class>net.techreadiness.ui.tags.form.FieldSetRowTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>The value is passed through to the HTML container for the row.</description>
+			<name>id</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>User friendly label for the row.</description>
+			<name>name</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>display order for this tag. valid values are "first", "last", or a number to describe the order.</description>
+			<name>displayOrder</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>additional information to be displayed next to the label for this row</description>
+			<name>description</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<description>Used to match a hard coded row with one that came from a ViewDef.  If the value matches the ViewField.code 
+			then the hard coded row will override the one from the ViewDef.</description>
+			<name>code</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<example>
+&lt;ui:fieldsetRow id="username" name="username"&gt;
+	&lt;s:textfield name="user.username" label="Username" required="true" value="%{user.username}" /&gt;
+&lt;/ui:fieldsetRow&gt;
+		</example>
+	</tag>
+
+	<tag>
+		<description>
+			<![CDATA[
+				<p>The tag renders an accordian type control.  Each child ui:detailSetRow tag is collapsable by clicking 
+				the section title.</p>
+				<img src="../../images/example-detailSet.png" />
+			]]>
+		</description>
+		<name>detailset</name>
+		<tag-class>net.techreadiness.ui.tags.detail.DetailSetTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<description>
+			Renders a section of an accordian as a part of a ui:detailSet.
+		</description>
+		<name>detailsetRow</name>
+		<tag-class>net.techreadiness.ui.tags.detail.DetailSetRowTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>The name of a value from a Struts resource bundle.  Should be a valid value for the s:text tag.</description>
+			<name>title</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>navigationBar</name>
+		<tag-class>net.techreadiness.ui.tags.navigation.NavigationBarTag</tag-class>
+		<body-content>scriptless</body-content>
+	</tag>
+
+	<tag>
+		<description>
+			<![CDATA[
+				<p>The data view tag provides a container for a data grid as well as several ways to manipulate its contents.  A child 
+				ui:datagrid tag <strong>MUST EXIST</strong>.</p>
+				<h3>Search</h3>
+				<p>The search box is rendered and supports AJAX to refresh the contents of the data grid.  The value of the 
+				search box is avialble from the DataGridState object.  The DataGridItemProvider must implement the search 
+				functionality separately.</p>
+				<h3>Selection</h3>
+				<p>The view renders the selected rows from the data grid via a the <a href="shoppingCart.html">ui:shoppingCart</a> tag.</p>
+				<h3>Tasks</h3>
+				<p>If a task flow was supplied then the tasks section will be rendered.  All of the tasks that are a part of the 
+				task flow will display in this section.</p>
+				<h3>Filters</h3>
+				<p>Filters can be added to the left side of the data grid.  The filters are <a href="dataViewControl.html">ui:dataViewControl</a> or 
+				<a href="dataViewFilter.html">ui:dataViewFilter</a>These controls also support AJAX to refresh the data displayed when they have been changed.</p>
+				<h3>Screen Shot</h3>
+				<img src="../../images/example-dataview.png" />
+			]]>
+		</description>
+		<name>dataView</name>
+		<tag-class>net.techreadiness.ui.tags.dataview.DataViewTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>TaskFlow for the page.</description>
+			<name>taskFlow</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.ui.task.TaskFlowDefinition</type>
+		</attribute>
+
+		<attribute>
+			<description>
+				If true the data view will render a link that allows the user to select which filters are shown.  The filters based on the fields from the ViewDef are available for hiding or displaying.  The default value is 'false'.
+			</description>
+			<name>filterSelectable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<description>Title to show for this dataview.</description>
+			<name>title</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<example>
+&lt;ui:dataView taskFlow="${taskFlow}"&gt;
+	&lt;ui:dataViewControl code="orgs" name="%{getText('core.parent')} %{getText('core.organization')}" configLinkName="%{getText('core.change')}" namespace="/organizationControl" configAction="showOptions"
+			contentAction="show" side="left" dataGridId="orgSearchGrid" /&gt;
+	&lt;ui:dataViewFilter code="orgType" name="%{getText('core.organization')} %{getText('core.type')}" configLinkName="%{getText('core.change')}"
+			side="left" dataGridId="orgSearchGrid" beanName="orgTypeSelectionFilterHandlerForOrgList" valueKey="orgTypeId" /&gt;
+	&lt;ui:shoppingCart name="ORGANIZATIONS"&gt;
+		&lt;s:property value="name"/&gt;
+	&lt;/ui:shoppingCart&gt;
+	&lt;s:form&gt;
+		&lt;ui:datagrid itemProvider="${orgItemProvider}" value="orgSearchGrid" var="org" viewDef="${dataGridView}" selectable="true" rowValue="orgId"&gt;
+			&lt;ui:dataGridColumn name="Name" id="name" nameKey="core.name"&gt;
+				&lt;ui:flyout text="${org.name}" title="Org Details" namespace="/organization" action="details" orgId="%{orgId}" showTaskLinks="false"/&gt;
+			&lt;/ui:dataGridColumn&gt;
+			&lt;ui:dataGridColumn id="orgType" name="Org Type" nameKey="organization.list.orgTypeHeader"&gt;
+				&lt;s:property value="orgType.name"/&gt;
+			&lt;/ui:dataGridColumn&gt;
+			&lt;ui:dataGridColumn id="parentOrg" name="%{getText('core.parent')} %{getText('core.organization')}"&gt;
+				&lt;s:property value="parentOrg.name"/&gt;
+			&lt;/ui:dataGridColumn&gt;
+		&lt;/ui:datagrid&gt;
+	&lt;/s:form&gt;
+&lt;/ui:dataView&gt; </example>
+	</tag>
+	<tag>
+		<description>
+		<![CDATA[
+			<p>The tag is used for rendering controls that interact with the data grid.  This is usually in the form a filter, but is not limited 
+			to that role.  This control wraps the Struts 2 's:action' tag.  To use of this tag requires two Struts 2 actions.  Click events in the 
+			header and body trigger AJAX refreshes the data grid when rendered as a part of a <a href="dataView.html">ui:dataView</a>.</p>
+			<h3>Dynamic Attributes</h3>
+			<p>Any dynamic attirbutes specified will be inclued as request parameters for the config and content actions.</p>
+			<h3>Screen Shot</h3>
+			<img src="../../images/example-dataViewControl.png" /><br/>
+			<h3>Content Action</h3>
+			<p>The content action is responsible for displaying the main body of the control.  Any additional links included 
+			in the body will be executed as AJAX.  The action responsible for handling the request <strong>MUST</strong> render 
+			the data view control body as its result.</p>
+			<h3>Config Action</h3>
+			<p>The config action displays in a popup like window that allows the user to modify the content of the body.  In 
+			the case of filters common actions are 'add' or 'change'.  The Struts 2 action responsible for handling the request 
+			<strong>MUST</strong> render the data view control body as its result.</p>
+			]]>
+		</description>
+		<name>dataViewControl</name>
+		<tag-class>net.techreadiness.ui.tags.dataview.DataViewControlTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>A unique identifier for this control</description>
+			<name>code</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<description>The name of this control which will be displayed in the heading</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The namespace in which actions for this control will be executed</description>
+			<name>namespace</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<description>The name of the link which will be shown in the heading</description>
+			<name>configLinkName</name>
+		</attribute>
+
+		<attribute>
+			<description>The action which will be executed to render the contents of a popup with configuration for this control</description>
+			<name>configAction</name>
+		</attribute>
+
+		<attribute>
+			<description>The action which will be executed to render the content of this control</description>
+			<name>contentAction</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<description>The elementId of the datagrid</description>
+			<name>dataGridId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The side of the screen this control should display on.  One of [left, right].</description>
+			<name>side</name>
+		</attribute>
+
+		<attribute>
+			<description>
+				Determines whether the results of the config action will be shown in a popup.
+				If false, config results will be shown in the body of the control.  Defaults to true.
+        	</description>
+			<name>configPopup</name>
+		</attribute>
+		
+		<attribute>
+			<description>
+				Determines whether the results of the config action will be shown in a full page popup
+				(lightbox). This overrides the configPopup setting if set to true. 
+				If it is false, the configPopup setting is used. Defaults to false.
+        	</description>
+			<name>configFullPopup</name>
+		</attribute>
+
+		<attribute>
+			<description>Determines if a value is required for this filter. Will cause a message to be displayed prompting the user to select a value if none are selected.</description>
+			<name>promptIfEmpty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		<attribute>
+			<description>control whether the filter is displayed</description>
+			<name>displayed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		
+		
+		<attribute>
+			<description>a number to display in the header</description>
+			<name>number</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		
+		<dynamic-attributes>true</dynamic-attributes>
+		<example>
+&lt;ui:dataViewControl code="filters" name="FILTERS" namespace="/filterList" side="left" contentAction="show"
+	dataGridId="orgSearchGrid" viewDefType="ORG_DATAGRID" /&gt; </example>
+	</tag>
+	<tag>
+		<description>
+			The "shopping cart" is a bucket displayed on a dataview which shows rows which have
+			been selected. The contents of the tag are used to format an individual row in the 
+			shopping cart. The current row is pushed to the top of the stack during rendering.
+		</description>
+
+		<name>shoppingCart</name>
+		<tag-class>net.techreadiness.ui.tags.dataview.ShoppingCartTag</tag-class>
+		<body-content>scriptless</body-content>
+
+
+		<attribute>
+			<description>The text used to describe the content of the cart</description>
+			<name>name</name>
+			<required>true</required>
+		</attribute>
+	</tag>
+	<tag>
+		<description>
+			<![CDATA[
+			<p>This tag allows the customization of the buttons in a task view.</p>
+			<img src="../../images/example-taskFlowHeader.png" />
+			]]>
+		
+		</description>
+		<name>taskNavigation</name>
+		<tag-class>net.techreadiness.ui.tags.taskflow.TaskNavigationTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>The text used to display on the Save button</description>
+			<name>saveButton</name>
+		</attribute>
+		<attribute>
+			<name>suppressSave</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>The text used to display on the Reset button</description>
+			<name>resetButton</name>
+		</attribute>
+		<example>
+			&lt;taskNavigation saveButton="Create" /&gt;
+		</example>
+	</tag>
+	<tag>
+		<description><![CDATA[
+			<p>The task view can render four different types of pages: multiple fieldsets, single fieldset, datagrid and free form.</p>
+			<ul>
+			<li>Multiple Fieldsets: The detailMode must be true and an item provider must be provided.</li>
+			<li>Single Fieldset: The detailMode must be true and no item provider is provided.</li>
+			<li>Datagrid: The detailMode must be false and an item provider must be provided.</li>
+			<li>Free Form: The detailMode must be false and no item provider is provided.</li>
+			</ul>
+			<p>When rendering a fieldset or datagrid any child ui:entityField tags will be rendered as fieldset rows or datagrid columns
+			where appropriate.</p>
+			
+			<h3>Mode Switching</h3>
+			<p>If the 'value' attribute resolves to a net.techreadiness.ui.tags.taskview.TaskViewState then a link is 
+			displayed for the user to switch between two modes.  The two modes are the Data Grid and Multiple 
+			Field sets.</p>
+			
+			<h3>Data Grid Mode</h3>
+			<img src="../../images/example-taskview-datagrid.png" />
+			
+			<h3>Multiple Fieldsets</h3>
+			<img src="../../images/example-taskview-details.png" />
+			
+			<h3>Selection</h3>
+			<p>If a collection of item is given to the tag, a section will be rendered that 
+			contains all of the items in that collection.  The text that is displayed in the 
+			section is generated from the OGNL expression in the 'selectionDisplayExpression' 
+			attribute.</p>
+			<img src="../../images/example-taskView-selection.png" />
+			]]>
+		</description>
+		<name>taskView</name>
+		<tag-class>net.techreadiness.ui.tags.taskview.TaskViewTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>The view definition used when the task is in data grid mode.</description>
+			<name>dataGridViewDef</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.ViewDef</type>
+		</attribute>
+		<attribute>
+			<description>The view definition used when the task is in detail mode, or is displaying a single fieldset.</description>
+			<name>fieldSetViewDef</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.ViewDef</type>
+		</attribute>
+		<attribute>
+			<description>If true, a single fieldset or a fieldset for each record provided by the item provider will be rendered.  If
+			 false a data grid will be rendered.  The default value is false.</description>
+			<name>detailMode</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>itemProvider</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.DataGridItemProvider</type>
+		</attribute>
+		<attribute>
+			<description>The name of the DataGridState or TaskViewState object in the ValueStack.  If the value resolves to a TaskViewState 
+			the user will be able to toggle between grid and detail modes.</description>
+			<name>value</name>
+		</attribute>
+		<attribute>
+			<description>The task flow object for the current set of tasks.
+			</description>
+			<name>taskFlow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.ui.task.TaskFlowData</type>
+		</attribute>
+		<attribute>
+			<description>The checkbox for checking all rows in a taskview..
+			</description>
+			<name>selectAllRows</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>Name used to reference the value pushed into the ValueStack.</description>
+			<name>var</name>
+		</attribute>
+		<attribute>
+			<description>OGNL expression used to prefix the name attributes of the rendered input tags.</description>
+			<name>fieldName</name>
+		</attribute>
+		<attribute>
+			<description>OGNL expression used to describe each record from the item provider.  If a grid is displayed this will be a column, if multiple 
+			fieldsets are displayed a list is displayed.</description>
+			<name>nameExpression</name>
+		</attribute>
+		<attribute>
+			<description>Text key that is used as the list or column header for the 'nameExpression' column or list entry.</description>
+			<name>listHeader</name>
+		</attribute>
+		<attribute>
+			<name>rowIdentifier</name>
+		</attribute>
+		<attribute>
+			<description>Collection of objects that should be rendered in the selected section.</description>
+			<name>selection</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.Collection</type>
+		</attribute>
+		<attribute>
+			<description>Text key that is used as the section title for the selection box.</description>
+			<name>selectionTitle</name>
+		</attribute>
+		<attribute>
+			<description>OGNL expression for displaying selected items.  The expression should assume the selected 
+			value is at the top of the stack.  If this is null no selected section will be rendered.</description>
+			<name>selectionDisplayExpression</name>
+		</attribute>
+		<attribute>
+			<description>If true the name expression column will not be rendered when the task is in grid mode.  
+			The default value is false.
+			</description>
+			<name>hideNameColumnInGrid</name>
+		</attribute>
+		<attribute>
+			<description>OGNL expression used to group multiple rows together.  If this is non-null the expression will be evaluated 
+			and compared to the value from the previous row.  If they are the same the column contents will not be rendered.  If they are 
+			different then the contents will be rendered.  The column is rendered 'onchange' of the evaluated result of the expression.
+			</description>
+			<name>groupExpression</name>
+		</attribute>
+		<attribute>
+			<name>paging</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>suppressSave</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	<tag>
+		<description>Allows inclusion of a tag body if the current Authentication has one of the specified permissions.</description>
+		<name>secured</name>
+		<tag-class>net.techreadiness.ui.tags.security.SecuredTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>A set of permission codes, which will be looked up given the users' roles.</description>
+			<name>hasPermission</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.security.PermissionCodeSet</type>
+		</attribute>
+		<attribute>
+			<description>
+                A page scoped variable into which the boolean result of the tag evaluation will be written, allowing the
+                same condition to be reused subsequently in the page without re-evaluation.
+            </description>
+			<name>var</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<description>
+          A tag used to render a popup containing additional details about an entity of some kind 
+          (org, user, etc.).  The namespace and action are the struts2 namespace/action that
+          return the content of the popup.  Use the dynamic attributes to pass any additional parameters
+          you may need (at a minimum, the ID of the entity for which to get the details).
+        </description>
+		<name>flyout</name>
+		<tag-class>net.techreadiness.ui.tags.flyout.FlyoutTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>The title to display with this flyout (eg. org details).</description>
+			<name>title</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The text to display with this tag (eg. org name).</description>
+			<name>text</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The namespace in which actions for this control will be executed.</description>
+			<name>namespace</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The action which will be executed to render the contents of a popup.</description>
+			<name>action</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The value for the link, if not using namespace/action</description>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+		<example>
+&lt;ui:flyout text="${orgName}" title="Organization Details" namespace="/org" action="details" orgId="%{id}" reset="true" showTaskLinks="true" /&gt;
+		</example>
+	</tag>
+
+	<tag>
+		<description>
+          A tag used to render text with the ability to control the HTML escaping.
+        </description>
+		<name>text</name>
+		<tag-class>net.techreadiness.ui.tags.TextTag</tag-class>
+		<body-content>empty</body-content>
+
+		<attribute>
+			<description>Name of the resource property to fetch.</description>
+			<name>name</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>Whether to escape HTML.</description>
+			<name>escapeHtml</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<description>Name of the page scoped variable to put the result.</description>
+			<name>var</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<example>
+&lt;ui:htmlText name="some.resource.key"/&gt;
+		</example>
+	</tag>
+	
+	<tag>
+		<name>dataViewFilters</name>
+		<tag-class>net.techreadiness.ui.tags.dataview.DataViewFiltersTag</tag-class>
+		<body-content>scriptless</body-content>
+		
+		
+		
+		<attribute>
+			<description>The code for which to obtain a view def. Filters will be displayed for this viewDef.</description>
+			<name>viewDefType</name>
+		</attribute>
+		
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	
+	<tag>
+		<description>
+    		<![CDATA[
+    			The tag is wired to four Struts 2 actions.  They work to maintain a list of currently selected filters for 
+    			a field.
+    			<ul>
+    				<li>Add - Add an object to the list.</li>
+    				<li>Remove - Remove an object from the list.</li>
+    				<li>Show - Display the current state of the list</li>
+    				<li>Show Options - Display the options available to be added to the list.</li>
+    			</ul>
+    			The Struts actions use the Spring Bean that is defined by the 'beanName' attirbute to implement the operations.  
+    			The bean must refer to a class that implements the 'net.techreadiness.customer.action.FilterSelectionHandler' interface.  
+    		]]>
+    	</description>
+		<name>dataViewFilter</name>
+		<tag-class>net.techreadiness.ui.tags.dataview.DataViewFilterTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>A unique identifier for this control</description>
+			<name>code</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<description>The name of this control which will be displayed in the heading</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The name of the link which will be shown in the heading</description>
+			<name>configLinkName</name>
+		</attribute>
+
+		<attribute>
+			<description>The elementId of the datagrid</description>
+			<name>dataGridId</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>The spring bean name of the net.techreadiness.customer.action.FilterSelectionHandler responsible for managing this control.</description>
+			<name>beanName</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<description>Determines if multiple selections are available.</description>
+			<name>multiple</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>Determines if a value is required for this filter. Will cause a message to be displayed prompting the user to select a value if none are selected.</description>
+			<name>promptIfEmpty</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+
+		<attribute>
+			<description>The property used to identify items from the selection handler. Default: "value"</description>
+			<name>valueKey</name>
+		</attribute>
+		
+		<attribute>
+			<description>The property used to display a user friendly description of the selection options. Default: "name"</description>
+			<name>nameKey</name>
+		</attribute>
+
+		<attribute>
+			<description>The side of the screen this control should display on.  One of [left, right].</description>
+			<name>side</name>
+		</attribute>
+
+		<attribute>
+			<description>The type of control to render. One of [select, autocomplete, checkbox]. Default is autocomplete.</description>
+			<name>type</name>
+		</attribute>
+		
+		<attribute>
+			<description>Whether this is a 'primary' filter. Primary filters will be shown in the dataView when the filters are collapsed.</description>
+			<name>primary</name>
+		</attribute>
+		<dynamic-attributes>true</dynamic-attributes>
+		<example>
+&lt;ui:dataViewFilter code="orgType" name="%{getText('core.organization')} %{getText('core.type')}" configLinkName="%{getText('core.change')}"
+	side="left" dataGridId="orgSearchGrid" beanName="orgTypeSelectionFilterHandlerForOrgList" valueKey="orgTypeId" /&gt;
+		</example>
+	</tag>
+
+	<tag>
+		<description>
+			Used to define fields within a taskView that can be either displayed as a row in a field set or a column in a 
+			data grid.  The taskView controls which way each field will be rendered.
+		</description>
+		<name>entityField</name>
+		<tag-class>net.techreadiness.ui.tags.taskview.EntityFieldTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>User friendly text that describes the field.  Will be used for the label or column header for the field.</description>
+			<name>name</name>
+		</attribute>
+
+		<attribute>
+			<description>A key in a resource bundle to look up the label/column header for the field.</description>
+			<name>nameKey</name>
+		</attribute>
+
+		<attribute>
+			<name>code</name>
+			<required>true</required>
+		</attribute>
+
+		<attribute>
+			<description>The initial sort direction for the column.  Defaults to SortDirection.NONE.</description>
+			<name>defaultSortDirection</name>
+		</attribute>
+
+		<attribute>
+			<description>Valid values are "first", "last", or a number to describe the order.</description>
+			<name>displayOrder</name>
+		</attribute>
+
+		<attribute>
+			<description>
+			A comma separated list of columns that should be sorted according to the sort direction. All columns listed will 
+ be sorted the same way. For example, if the value is "col1,col2" then each column would be listed separately in 
+ the list of sorted columns.
+			</description>
+			<name>sortColumns</name>
+		</attribute>
+
+		<attribute>
+			<description>Value to determine if the column should be sortable.  Default is false.</description>
+			<name>sortable</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<name>grouped</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>If true then the field will be rendered when in 'grid' mode.  If false the field will not be rendered.  Default is true.</description>
+			<name>displayInGrid</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>If true then the field will be rendered when in 'detail' mode.  If false the field will not be rendered.  Default is true.</description>
+			<name>displayInDetail</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	    <attribute>
+			<description>
+				If true the column will be rendered with a class that indicates required. 
+			</description>
+			<name>required</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<description>
+			This tag allows entity fields to be 'grouped' under a heading.  The heading is rendered above the column headings in grid mode. It is currently ignored in details mode.
+		</description>
+		<name>entityFieldGroup</name>
+		<tag-class>net.techreadiness.ui.tags.taskview.EntityFieldGroupTag</tag-class>
+		<body-content>scriptless</body-content>
+
+		<attribute>
+			<description>User friendly text that will be used as a heading above the column headers in column mode.</description>
+			<name>name</name>
+		</attribute>
+	</tag>
+	<tag>
+		<description>
+			Conditional tag that evaluates the body if the supplied View Rule evaluates to true.  If the 'var' attribute 
+			is specified then the result (java.lang.Boolean) is exposed as a scripting variable.  This tag is very similar to the JSTL c:if tag.
+		</description>
+		<name>viewRule</name>
+		<tag-class>net.techreadiness.ui.tags.ViewRuleTag</tag-class>
+		<tei-class>net.techreadiness.ui.tags.ViewRuleTEI</tei-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>Name of the exported scoped variable for the resulting value of the test condition.</description>
+			<name>var</name>
+		</attribute>
+		<attribute>
+			<description>The scope for 'var' should be one of: application, session, request or page.</description>
+			<name>scope</name>
+		</attribute>
+		<attribute>
+			<description>The id for the rule that should be executed to control the rendering of the tag body.</description>
+			<name>ruleId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Long</type>
+		</attribute>
+		<attribute>
+			<description>An OGNL expression that evaluates to the object that should be used while evaluating the rule.  If 
+			it is not a subclass of net.techreadiness.service.object.BaseObject then the rule will not be executed.  In this 
+			case the body of the tag is always executed.  If the object is a subclass then the rule will be executed and the 
+			body will be included only if the rule did not generate any errors.</description>
+			<name>row</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
+		<attribute>
+			<description>The rule service that is responsible for executing the rule.</description>
+			<name>ruleService</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.RuleService</type>
+		</attribute>
+		<example>
+&lt;ui:viewRule ruleId="${rule.ruleId}" ruleService="${ruleService}" row="${group}"&gt;
+	&lt;s:property value="description" /&gt;
+&lt;/ui:viewRule&gt;
+		</example>
+	</tag>
+	<tag>
+		<description><![CDATA[
+			<p>The autocomplete field can render a modified data control that offers
+			    autocomplete lookups (e.g. roles, orgs) in a form field layout.</p>
+			]]>
+		</description>
+		<name>autocompleteField</name>
+		<tag-class>net.techreadiness.ui.tags.taskview.AutocompleteFieldTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description>The text key to the label to show for the field.</description>
+			<name>labelKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Name identifier of control type, e.g. role, org</description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Namespace path to control actions</description>
+			<name>namespace</name>
+			<required>true</required>			
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The name of the action on the namespace for loading.</description>
+			<name>loadAction</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The name of the action on the namespace for showing selection.</description>
+			<name>showAction</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>				
+		<attribute>
+			<description>
+				If true the field will be rendered with a class that indicates required. 
+			</description>
+			<name>required</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+				If true the field will be rendered with a class that indicates required. 
+			</description>
+			<name>instanceId</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	    <attribute>
+			<description>
+				If true the field will be allow multiple selections. 
+			</description>
+			<name>multiple</name>
+			<required>true</required>			
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>				
+	</tag>
+	<function>
+		<description>Abbreviate text to the given size.</description>
+		<display-name>abbreviate</display-name>
+		<name>abbreviate</name>
+		<function-class>net.techreadiness.el.functions.Strings</function-class>
+		<function-signature>java.lang.String abbreviate(java.lang.String, int)</function-signature>
+	</function>
+</taglib>

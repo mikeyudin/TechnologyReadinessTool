@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/decorators">
+	<excludes>
+		<pattern>*ajax*</pattern>
+		<pattern>/login*</pattern>
+		<pattern>/j_spring_cas_security_logout*</pattern>
+		<pattern>/not-authorized*</pattern>
+		<pattern>/error*</pattern>
+		<pattern>/util/*</pattern>
+		<pattern>/forgot-password*</pattern>
+		<pattern>/change-password*</pattern>
+		<pattern>/forgot-username*</pattern>
+		<pattern>/health-check*</pattern>			
+	</excludes>
+	<decorator name="main" page="/decorators/layout.jsp">
+		<pattern>/*</pattern>
+	</decorator>
+	<decorator name="task" page="/decorators/task.jsp">
+		<pattern>/task*</pattern>
+	</decorator>
+</decorators>

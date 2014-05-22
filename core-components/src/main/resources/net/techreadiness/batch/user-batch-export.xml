@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<bean id="userExportReader" class="org.springframework.batch.item.database.JpaPagingItemReader" scope="step">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="pageSize" value="256" />
+		<property name="queryProvider" ref="userExportQueryProvider" />
+	</bean>
+
+	<bean id="userFieldExtractor" class="net.techreadiness.batch.CoreFieldExtractor" scope="prototype">
+		<property name="resource" value="classpath:net/techreadiness/batch/user/user-export.txt" />
+	</bean>
+
+	<bean id="userLineAggregator" class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+		<property name="fieldExtractor" ref="userFieldExtractor" />
+	</bean>
+
+	<bean id="userFlatFileItemWriter" scope="step" class="org.springframework.batch.item.file.FlatFileItemWriter">
+		<property name="lineAggregator" ref="userLineAggregator" />
+		<property name="resource" value="#{jobParameters['jobTempFileName']}" />
+		<property name="headerCallback" ref="userHeaderCallback" />
+	</bean>
+
+	<bean id="userExtractProcessor" class="net.techreadiness.batch.user.UserDOToDataProcessor" />
+	
+	<bean id="userHeaderCallback" class="net.techreadiness.batch.user.UserHeaderCallback" />
+
+	<batch:job id="userExportJob">
+		<batch:step id="userExportStep">
+			<batch:tasklet>
+				<batch:chunk reader="userExportReader" processor="userExtractProcessor" writer="userFlatFileItemWriter"
+					commit-interval="256" />
+
+				<batch:listeners>
+					<batch:listener ref="coreItemListener" />
+					<batch:listener ref="exportStepListener" />
+				</batch:listeners>
+			</batch:tasklet>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="jobCompletionListener" />
+		</batch:listeners>
+	</batch:job>
+</beans>

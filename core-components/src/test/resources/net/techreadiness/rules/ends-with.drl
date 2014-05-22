@@ -1,0 +1,33 @@
+import java.util.List;
+global java.util.List endedWith;
+global java.util.List endedWithNull;
+global java.util.List nullEndedWith;
+global java.util.List notEndsWith;
+
+rule "test endsWith"
+when
+	$string : String(this endsWith "hello")
+then
+	endedWith.add($string);
+end
+
+rule "test endsWith null"
+when
+	$string : String(this endsWith null)
+then
+	endedWithNull.add($string);
+end
+
+rule "test null endsWith"
+when
+	$string : String(this endsWith "hello")
+then
+	nullEndedWith.add($string);
+end
+
+rule "test not endsWith"
+when
+	$string : String(this not endsWith "hello")
+then
+	notEndsWith.add($string);
+end

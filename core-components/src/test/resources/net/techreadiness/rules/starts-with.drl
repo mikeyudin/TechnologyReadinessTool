@@ -1,0 +1,33 @@
+import java.util.List;
+global java.util.List startedWith;
+global java.util.List startedWithNull;
+global java.util.List nullStartedWith;
+global java.util.List notStartsWith;
+
+rule "test startsWith"
+when
+	$string : String(this startsWith "hello")
+then
+	startedWith.add($string);
+end
+
+rule "test startsWith null"
+when
+	$string : String(this startsWith null)
+then
+	startedWithNull.add($string);
+end
+
+rule "test null startsWith"
+when
+	$string : String(this startsWith "hello")
+then
+	nullStartedWith.add($string);
+end
+
+rule "test not startsWith"
+when
+	$string : String(this not startsWith "hello")
+then
+	notStartsWith.add($string);
+end

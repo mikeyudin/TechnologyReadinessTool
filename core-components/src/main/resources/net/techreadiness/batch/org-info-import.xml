@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd">
+
+	<bean id="orgInfoFieldSetMapper" class="net.techreadiness.batch.CoreFieldSetMapper">
+		<constructor-arg value="net.techreadiness.batch.org.OrgData" />
+		<property name="binder" ref="orgInfoBinder" />
+	</bean>
+
+	<bean id="orgInfoMappingProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:net/techreadiness/batch/org-info/org-info-import.properties" />
+	</bean>
+
+	<bean id="orgInfoBinder" class="net.techreadiness.batch.Binder">
+		<constructor-arg ref="orgInfoMappingProperties" />
+	</bean>
+
+	<bean id="orgInfoLineTokenizer" scope="step" class="net.techreadiness.batch.org.info.OrgInfoLineTokenizer" />
+
+	<bean id="orgInfoLineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="orgInfoLineTokenizer" />
+		<property name="fieldSetMapper" ref="orgInfoFieldSetMapper" />
+	</bean>
+
+	<bean id="orgInfoCoreLineMapper" class="net.techreadiness.batch.CoreLineMapper">
+		<property name="delegate" ref="orgInfoLineMapper" />
+	</bean>
+
+	<bean id="orgInfoReader" scope="step" class="org.springframework.batch.item.file.FlatFileItemReader">
+		<property name="resource" value="#{jobParameters['jobFileName']}" />
+		<property name="lineMapper" ref="orgInfoCoreLineMapper" />
+		<property name="linesToSkip" value="1" />
+	</bean>
+
+	<bean id="orgInfoWriter" scope="step" class="net.techreadiness.batch.org.info.OrgInfoWriter">
+		<property name="fileId" value="#{jobParameters['jobFileId']}" />
+		<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+		<property name="userId" value="#{jobParameters['jobUserId']}" />
+		<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+	</bean>
+
+	<batch:job id="csvOrgInfoImport">
+		<batch:step id="orgInfoItemCount" next="orgInfoImport">
+			<batch:tasklet>
+				<batch:chunk reader="orgInfoReader" writer="blackHoleWriter" commit-interval="100" skip-policy="alwaysSkipPolicy" />
+			</batch:tasklet>
+			<batch:listeners>
+				<batch:listener ref="itemCountStepListener" />
+				<batch:listener ref="fileFormatStepListener" />
+				<batch:listener ref="coreItemListener" />
+			</batch:listeners>
+		</batch:step>
+		<batch:step id="orgInfoImport">
+			<batch:tasklet>
+				<batch:chunk reader="orgInfoReader" writer="orgInfoWriter" commit-interval="1" skip-limit="500">
+					<batch:skippable-exception-classes>
+						<batch:include class="java.lang.Exception" />
+						<batch:include class="java.io.FileNotFoundException" />
+					</batch:skippable-exception-classes>
+				</batch:chunk>
+				<batch:listeners>
+					<batch:listener ref="coreItemListener" />
+					<batch:listener ref="fileStatusStepListener" />
+				</batch:listeners>
+			</batch:tasklet>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="jobCompletionListener" />
+		</batch:listeners>
+	</batch:job>
+
+</beans>

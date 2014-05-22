@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	
+	<jaxrs:server id="restServer" address="/rest/">
+		<jaxrs:serviceBeans>
+			<ref bean="userRestServiceImpl" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<bean class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" />
+		</jaxrs:providers>
+		<jaxrs:extensionMappings>
+			<entry key="feed" value="application/atom+xml" />
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+			<entry key="html" value="text/html" />
+		</jaxrs:extensionMappings>
+	</jaxrs:server>
+
+	<context:component-scan base-package="net.techreadiness" />
+	<context:annotation-config />
+	<aop:aspectj-autoproxy />
+	
+	<aop:config expose-proxy="true"/>
+
+	<bean id="serviceContext" class="net.techreadiness.customer.ServiceContextFactoryBean" scope="request">
+		<aop:scoped-proxy/>
+	</bean>
+	
+	<bean id="dataModificationStatus" class="net.techreadiness.service.DataModificationStatus" scope="session">
+		<aop:scoped-proxy/>
+	</bean>
+	
+	<bean id="messageSource" class="net.techreadiness.text.CoreResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>customer</value>
+				<value>exceptions</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

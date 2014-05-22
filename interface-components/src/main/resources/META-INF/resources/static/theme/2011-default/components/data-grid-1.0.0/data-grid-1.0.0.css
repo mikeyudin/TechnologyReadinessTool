@@ -1,0 +1,295 @@
+@charset "utf-8";
+
+
+/* TABLE: DATA GRID
+-------------------------------------------------------------------------------------*/
+
+/* ----- TABLE: DATA GRID OBJECT: ALPHA -------------------------------*/
+
+	/*
+	
+	*/
+
+
+table.data-grid-object-alpha {
+	width: 100%
+}
+
+
+/* ----- TABLE HEADER ------------------------------------------------ */
+table.data-grid-object-alpha tr.header-results {
+	border-bottom: 1px solid #f1f1f1;
+}
+
+
+table.data-grid-object-alpha tr.header-results div.header-results-title {
+	margin-left: 10px;
+	font-size: 95%;
+	font-weight: bold;
+	color: #000;
+	white-space: nowrap;
+	text-align: center;
+}
+
+table.data-grid-object-alpha tr.header-results div.results {
+	float: right;
+	margin: 3px 15px 2px 0;
+	font-size: 90%;
+	white-space: nowrap;
+}
+
+table.data-grid-object-alpha tr.headers th {
+	font-size: 95%;
+	font-weight: bold;
+	color: #FFF;
+	white-space: wrap;
+	padding: 8px 8px 8px 2px;
+	background-color: inherit;
+	background-image: inherit;
+}
+table.data-grid-object-alpha tr.headers th.column-group {
+	text-align:center;
+	font-weight: bold;
+	padding-top: .75em;
+}
+
+table.data-grid-object-alpha tr.headers-with-subs th {
+	padding: 0 0 0.4em 0;
+}
+
+table.data-grid-object-alpha tr.headers th.sort {
+	/*background: #d7d7d7;*/
+}
+
+table.data-grid-object-alpha tr.headers th div.sort {
+	margin: 0.9em 0 0 0.3em;
+	position: relative;
+	float: left;
+	width: 7px;
+	height: 8px;
+}
+
+table.data-grid-object-alpha tr.headers-with-subs th div.sort {
+	margin: 0.25em 0 0 0.3em;
+}
+
+table.data-grid-object-alpha tr.headers th .filter-text {
+	color: #FFF;
+	font-size: 90%;
+	font-weight: bold;
+	white-space: wrap;
+}
+
+table.data-grid-object-alpha tr.headers th a.filter-text {
+	cursor:pointer
+}
+
+table.data-grid-object-alpha tr.headers-with-subs th a.filter-text {
+	margin: 0 0 0 0.3em;
+}
+
+table.data-grid-object-alpha tr.headers-with-subs th span.superheader-text {
+	display: block;
+	float: center;
+	color: #000;
+	margin: 0.6em 0 0 0;
+	font-size: 90%;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+table.data-grid-object-alpha tr.headers-with-subs th.sub-header,
+table.data-grid-object-alpha tr.headers-with-subs th.sub-header a {
+	color: #6b6b6b;
+}
+
+table.data-grid-object-alpha tr.headers th a.filter-text:link,
+table.data-grid-object-alpha tr.headers th a.filter-text:visited {
+	text-decoration: none;
+}
+
+table.data-grid-object-alpha tr.headers th a.filter-text:hover {
+	text-decoration: underline;
+}
+
+table.data-grid-object-alpha tr.footer-results {
+	border-right: 0;
+	border-bottom: 0;
+	border-left: 0;
+}
+
+table.data-grid-object-alpha tr.footer-results td {
+	padding: 7px 0 5px 0;
+	font-size: 100%;
+	color: #6f6f6f;
+	line-height: 1.6;
+	text-align: center;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-beta {
+	float: left;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-gamma {
+	float: right;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha {
+	float: none;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha ul {
+	display: inline;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha li {
+	white-space: nowrap;
+	display: inline;
+	margin: 0 3px;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha ul li.pagination-current-page {
+	font-weight: bold;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha ul li.pagination-previous span {
+	color: #CACACA;
+	margin-left: 7px;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha ul li.pagination-next span {
+	color: #CACACA;
+	margin-right: 10px;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.data-grid-foot-alpha ul li.pagination-disabled {
+	color: #CACACA;
+}
+
+table.data-grid-object-alpha tr.footer-results td div.results {
+	float: right;
+	margin: 0 10px 0 0;
+	font-size: 11px;
+	white-space: nowrap;
+}
+
+table.data-grid-object-alpha tr.standard-row {
+	
+}
+
+/* table.data-grid-object-alpha tr.odd { */
+/* 	background-color: #FFFFFF; */
+/* } */
+
+table.data-grid-object-alpha tr.even {
+	background-color: #f9f9f9;
+}
+
+table.data-grid-object-alpha tr.standard-row td {
+	padding: 5px 9px 4px 2px;
+	font-size: 90%;
+	border-top: 1px solid #ddd;
+}
+
+table.data-grid-object-alpha tr.standard-row td strong {
+	font-size: 100%;
+	font-weight: bold;
+	color: #000;
+}
+
+table.data-grid-object-alpha tr.extra-padding td {
+	padding: 5px 11px 6px;
+}
+
+table.data-grid-object-alpha tr.extra-padding td br {
+	line-height: 1.8;
+}
+
+/* COMMAND BAR */
+table.data-grid-object-alpha tr.data-grid-task-bar {
+	/*border-bottom: 0;
+	height: 35px;
+	width: 100%;*/
+}
+
+table.data-grid-object-alpha tr.data-grid-task-bar th{
+	background: url(../../images/prototype-faking/fromUXPrototype/images/skin01/ui/command_bar.png) repeat-x;
+	padding-right: 10px;
+	font-size: 95%;
+	font-weight: bold;
+	color: #000;
+	white-space: nowrap;
+	padding: 0.5em;
+}
+
+table.data-grid-object-alpha tr.data-grid-task-bar th div.button div.button-text,
+table.data-grid-object-alpha tr.data-grid-task-bar div.button-down div.button-text, 
+table.data-grid-object-alpha tr.data-grid-task-bar div.button-disabled div.button-text,
+table.data-grid-object-alpha tr.data-grid-task-bar th div.button-dropdown div.button-text,
+table.data-grid-object-alpha tr.data-grid-task-bar div.button-dropdown-down div.button-text, 
+table.data-grid-object-alpha tr.data-grid-task-bar div.button-dropdown-disabled div.button-text {
+	float: left;
+	margin: 3px 0px 0px 0px;
+}
+
+table.data-grid-object-alpha tr.data-grid-task-bar div.button-dropdown-disabled div.button-text {
+	color: #b1b1b1;
+}
+
+div.data-grid-task-bar-dropdown-div {
+	display: none;
+	position: absolute;
+	top: 22px;
+	left: -1px;
+	background: url(../../images/prototype-faking/fromUXPrototype/images/skin01/ui/dropdown.png) #fff no-repeat;
+	background-position: 40px 0px;
+	border: 1px solid #aaa;
+	border-top: 0px;
+	padding: 3px;
+	width: 140px;
+	z-index: 1000;
+}
+
+thead {
+}
+
+tbody {
+}
+
+tfoot {
+}
+
+
+
+/* ----- TABLE: DATA GRID: GRAY ---------------------------------------*/
+
+	/*
+	Default data grid table.
+	*/
+
+
+table.gray {
+	/*margin-left:20px;*/
+	border: 1px solid #f1f1f1;
+	/*color: #6b6b6b;*/
+	color: #000;
+}
+
+tbody {
+}
+
+tfoot {
+}
+
+tr {
+}
+
+tr .alt {
+}
+
+th {
+}
+
+td {
+}
+

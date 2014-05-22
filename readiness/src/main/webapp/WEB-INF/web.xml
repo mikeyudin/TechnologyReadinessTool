@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+	<display-name>Technology Readiness Tool</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+    	<param-value>/WEB-INF/daoContext.xml /WEB-INF/applicationContext.xml classpath*:/net/techreadiness/batch/batch-config.xml</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextInitializerClasses</param-name>
+		<param-value>net.techreadiness.customer.context.ContextProfileInitializer</param-value>
+	</context-param>
+	
+	<!-- begin spring security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+		
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- end spring security -->
+	
+	<filter>
+		<filter-name>struts-prepare</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>struts-execute</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsExecuteFilter</filter-class>
+	</filter>
+	<filter>
+		<filter-name>sitemesh</filter-name>
+		<filter-class>com.opensymphony.sitemesh.webapp.SiteMeshFilter</filter-class>
+	</filter>
+
+   <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+	
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+	<filter-mapping>
+		<filter-name>struts-prepare</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>sitemesh</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	
+	<filter-mapping>
+		<filter-name>struts-execute</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/j_spring_security_logout</url-pattern>
+    </filter-mapping>
+
+  <listener>
+    <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+  </listener>
+ 
+	<listener>
+		<listener-class>net.techreadiness.ui.util.SystemPropertiesHelper</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.apache.struts2.dispatcher.ng.listener.StrutsListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>CXFServlet</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>sitemesh-freemarker</servlet-name>
+		<servlet-class>org.apache.struts2.sitemesh.FreemarkerDecoratorServlet</servlet-class>
+		<init-param>
+			<param-name>default_encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>sitemesh-freemarker</servlet-name>
+		<url-pattern>*.ftl</url-pattern>
+	</servlet-mapping>
+	<resource-ref>
+		<description>TomcatDB Connection</description>
+		<res-ref-name>core_connection</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>

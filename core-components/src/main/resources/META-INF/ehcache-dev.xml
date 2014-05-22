@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
+
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="1800" timeToLiveSeconds="43200" overflowToDisk="false"
+		diskPersistent="false" memoryStoreEvictionPolicy="LRU" />
+		
+	<cache name="customText" maxElementsInMemory="10000" eternal="false" maxElementsOnDisk="1"
+	       timeToIdleSeconds="1800" timeToLiveSeconds="43200" memoryStoreEvictionPolicy="LRU">
+	</cache>
+	
+	<cache name="hasPermission" maxElementsInMemory="10000" eternal="false" maxElementsOnDisk="1"
+	       timeToIdleSeconds="1800" timeToLiveSeconds="43200" memoryStoreEvictionPolicy="LRU">
+	</cache>
+	              
+	<cache name="viewDef" maxElementsInMemory="10000" eternal="false" maxElementsOnDisk="1"
+	       timeToIdleSeconds="1800" timeToLiveSeconds="43200" memoryStoreEvictionPolicy="LRU">                
+	</cache>        
+</ehcache>

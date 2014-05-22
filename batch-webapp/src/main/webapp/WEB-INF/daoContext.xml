@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:batch="http://www.springframework.org/schema/batch" 
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"/>
+
+	<cache:annotation-driven />
+
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" >
+		<property name="configLocation"><value>classpath:META-INF/ehcache-${cache.config}.xml</value></property>
+	</bean>
+
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcache" />
+	</bean>
+
+	<bean id="hibernatePersistenceProvider" class="net.techreadiness.persistence.HibernateExtendedPersistenceProvider">
+		<property name="preUpdateEventListeners">
+			<list><ref bean="auditedEntityListener"/></list>
+		</property>
+		<property name="preInsertEventListeners">
+			<list><ref bean="auditedEntityListener"/></list>
+		</property>
+	</bean>
+
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceProvider" ref="hibernatePersistenceProvider" />
+		<property name="packagesToScan" value="net.techreadiness"/>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="false" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+			</bean>
+		</property>
+
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory" />
+				<entry key="hibernate.cache.use_query_cache" value="false" />
+				<entry key="hibernate.cache.use_second_level_cache"><value>${cache.second.level}</value></entry>
+				<entry key="hibernate.generate_statistics" value="true" />
+				<entry key="hibernate.default_batch_fetch_size" value="16" />
+				<entry key="net.sf.ehcache.configurationResourceName"><value>/META-INF/ehcache-${cache.config}.xml</value></entry>
+			</map>
+		</property>
+	</bean>
+
+    <bean id="sessionFactory" factory-bean="entityManagerFactory" factory-method="getSessionFactory" />
+
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		 <property name="jndiName" value="java:comp/env/core_connection"/>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- THE Scheduler BEAN -->
+	<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jobFactory">
+            <bean  class="net.techreadiness.batch.scheduler.AutowiringSpringBeanJobFactory" />
+        </property>
+        <property name="quartzProperties">
+          <props>
+            <prop key="org.quartz.scheduler.instanceName">CoreScheduler</prop>
+            <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+            <prop key="org.quartz.threadPool.threadCount">10</prop>
+            
+            <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+            <prop key="org.quartz.jobStore.tablePrefix">core_batch.QRTZ_</prop>
+            <prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+            <prop key="org.quartz.jobStore.isClustered">true</prop>
+            <prop key="org.quartz.jobStore.clusterCheckinInterval">40000</prop>
+          </props>
+        </property>
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+    </bean>
+    
+	<!-- THE LOG READERS -->
+	<bean id="logList" class="org.springframework.beans.factory.config.ListFactoryBean">
+		<property name="targetListClass" value="java.util.ArrayList" />
+		<property name="sourceList">
+			<list>
+				<value>core.log</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+</beans>

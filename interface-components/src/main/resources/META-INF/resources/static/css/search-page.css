@@ -1,0 +1,40 @@
+.heading {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.footer .logo {
+	height: 40px;
+	display: inline-block;
+}
+
+.footer .logo + .logo {
+	margin-left: 40px;
+}
+
+.footer .logo-parcc {
+	width: 243px;
+	background-image: url('../images/program/parcc-logo-grayscale.png');
+}
+
+.footer .logo-parcc:hover {
+	background-image: url('../images/program/parcc-logo.png');
+}
+
+.footer .logo-sbac {
+	width: 129px;
+	background-image: url('../images/program/sbac-logo-grayscale.png');
+}
+
+.footer .logo-sbac:hover {
+	background-image: url('../images/program/sbac-logo.png');
+}
+
+.footer .logo-setda {
+	width: 96px;
+	background-image: url('../images/program/setda-logo-grayscale.png');
+}
+
+.footer .logo-setda:hover {
+	background-image: url('../images/program/setda-logo.png');
+}

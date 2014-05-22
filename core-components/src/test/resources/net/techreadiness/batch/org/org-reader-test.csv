@@ -1,0 +1,4 @@
+typeCode,parentOrgCode,code,name,inactive,addressLine1,addressLine2,city,state,zipCode,phoneNumber,phoneExtension,faxNumber,contact1Name,contact1Title,contact1AddressLine1,contact1AddressLine2,contact1City,contact1State,contact1ZipCode,contact1PhoneNumber,contact1PhoneExtension,contact1FaxNumber,contact1EmailAddress,contact2Name,contact2Title,contact2AddressLine1,contact2AddressLine2,contact2City,contact2State,contact2ZipCode,contact2PhoneNumber,contact2PhoneExtension,contact2FaxNumber,contact2EmailAddress
+school,400,r2d2,Robot Academy,0,1 X Wing Ave,line2,Base,Icy,12345,319-555-5555,123,319-555-5556,C3P0,Protocol Droid,cLine1,cLine2,cCity,cState,cZip,319-555-5557,234,319-555-5558,c3p0@galaxy.net,c2Name,c2Title,c2Line1,c2Line2,c2City,c2State,c2Zip,319-555-5559,345,319-555-5560,c2Email@mail.com
+state,,doe,Department of Education,,,,,Icy,,,,,,,,,,,,,,,,,,,,,,,,,,
+school,,s1,,1,,,,Icy,,,,,,,,,,,,,,,,,,,,,,,,,,

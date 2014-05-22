@@ -1,0 +1,80 @@
+div.toolbar {
+	background: #F1F1F1;
+	border-bottom: 1px solid #D7D7D7;
+	padding: 3px;
+	margin-bottom: 5px;
+}
+
+div.read-only-field {
+	color: black;
+	padding: 0.2em 0 0;
+	display: inline-block;
+}
+
+fieldset.sub-field-set {
+	border: #ddd solid 1px;
+	margin-left: 5px;
+	padding-right: 0.65em;
+}
+
+fieldset.sub-field-set legend {
+	margin-left: 5px;
+	padding: 0 3px 0 3px;
+}
+
+.toolbar .fieldset-title {
+	float: left;
+}
+
+.toolbar .fieldset-actions {
+	float: right;
+}
+
+h3.detailset-section-title {
+	color: #000000;
+	padding-top: .45em;
+	padding-bottom: .5em;
+	padding-left: .4em;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	line-height: 1.15em;
+	background-color: #FFFAAB;
+	background-image: linear-gradient(to bottom, #FFFAAB, #FFF44D);
+}
+
+h3.detailset-section-title a,h3.detailset-section-title a:visited,h3.detailset-section-title a:hover,h3.detailset-section-title a:active,h3.detailset-section-title a:focus
+	{
+	font-weight: bold;
+	color: #000000;
+}
+
+h3.detailset-section-title a span {
+	font-family: monospace;
+	padding-right: .3em;
+	vertical-align: 15%;
+}
+
+.detail-set-container .detail-set-section .data-grid-container {
+	margin: 0px 0px .3em 0px !important;
+}
+
+.input-info:hover {
+	cursor: pointer;
+	margin-left: 3px;
+}
+
+.input-info {
+	margin-left: 3px;
+}
+
+h4.error-heading,li.validation-error {
+	color: #C32929;
+}
+
+.detail-set-container .detail-set-section a.show-all {
+	margin-left: .3em;
+}
+
+.debug-info:hover {
+	cursor: pointer;
+}

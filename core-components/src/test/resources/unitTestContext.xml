@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:batch="http://www.springframework.org/schema/batch"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    <context:component-scan base-package="net.techreadiness" />
+    <context:annotation-config />
+
+    <bean class="net.techreadiness.service.ServiceContext"/>
+    <bean class="net.techreadiness.service.DataModificationStatus"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="net.techreadiness"/>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />
+			</bean>
+		</property>
+
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.cache.use_query_cache" value="false"/>
+				<entry key="hibernate.cache.use_second_level_cache" value="false"/>
+				<entry key="hibernate.generate_statistics" value="false"/>
+                <entry key="hibernate.hbm2ddl.auto" value="create-drop"/>
+<!--                 <entry key="hibernate.hbm2ddl.import_files" value="net/techreadiness/batch/spring-batch-h2-ddl.sql"/> -->
+			</map>
+		</property>
+	</bean>
+
+    <bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:core"/>
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jobFactory">
+			<bean class="net.techreadiness.batch.scheduler.AutowiringSpringBeanJobFactory" />
+		</property>
+		<property name="autoStartup" value="false" />
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.scheduler.instanceName">CoreScheduler</prop>
+				<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+				<prop key="org.quartz.threadPool.threadCount">1</prop>
+
+				<prop key="org.quartz.jobStore.class">org.quartz.simpl.RAMJobStore</prop>
+				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+				<prop key="org.quartz.jobStore.isClustered">false</prop>
+			</props>
+		</property>
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+	</bean>
+    
+    <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+    
+<!--     <bean id="resourcelessTransactionManager" class="org.springframework.batch.support.transaction.ResourcelessTransactionManager"/> -->
+    
+    <bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry" />
+	</bean>
+	
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
+		<property name="transactionManager" ref="transactionManager" />
+<!-- 		<property name="validateTransactionState" value="false"/>  -->
+	</bean>
+	
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+	<!--************************************** Spring Batch Job Definitions -->
+	
+	<!--***** Common Beans -->
+
+	<!--*****end Common Beans -->
+	
+	<!--***** Org Import -->
+	<bean id="orgFieldSetMapper" class="net.techreadiness.batch.CoreFieldSetMapper">
+		<constructor-arg value="net.techreadiness.batch.org.OrgData" />
+		<property name="binder" ref="orgBinder" />
+	</bean>
+	
+	<bean id="orgMappingProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean" >
+		<property name="location" value="classpath:net/techreadiness/batch/org/org-import-mapping.properties" />
+	</bean>
+	
+	<bean id="orgBinder" class="net.techreadiness.batch.Binder">
+		<constructor-arg ref="orgMappingProperties" />
+	</bean>
+	
+	<bean id="orgLineTokenizer" scope="step" class="net.techreadiness.batch.org.OrgLineTokenizer"/>
+
+	<bean id="orgLineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="orgLineTokenizer" />
+		<property name="fieldSetMapper" ref="orgFieldSetMapper" />
+	</bean>
+
+	<bean id="orgReader" scope="step" class="org.springframework.batch.item.file.FlatFileItemReader">
+		<property name="resource" value="#{jobParameters['jobFileName']}" />
+		<property name="lineMapper" ref="orgLineMapper" />
+		<property name="linesToSkip" value="1" />
+	</bean>
+
+	<bean id="orgWriter" scope="step" class="net.techreadiness.batch.org.OrgWriter">
+	    <property name="fileId" value="#{jobParameters['jobFileId']}" />
+		<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+		<property name="userId" value="#{jobParameters['jobUserId']}" />
+		<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+	</bean>
+	
+	<bean id="orgMatchingItemProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+	    <property name="delegates">
+	        <list>
+	            <bean class="net.techreadiness.batch.org.OrgMatchingItemProcessor" scope="step">
+	                <property name="fileId" value="#{jobParameters['jobFileId']}" />
+					<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+					<property name="userId" value="#{jobParameters['jobUserId']}" />
+					<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+					<property name="binder" ref="orgBinder" />
+	            </bean>
+	        </list>
+	    </property>
+	</bean>
+	
+	<batch:job id="csvOrgImport">
+		<batch:step id="orgImport">
+			<batch:tasklet>
+				<batch:chunk reader="orgReader" processor="orgMatchingItemProcessor" writer="orgWriter" commit-interval="50" skip-limit="50">
+					<batch:skippable-exception-classes>
+						<batch:include class="java.lang.Exception"/>
+						<batch:include class="java.io.FileNotFoundException"/>
+					</batch:skippable-exception-classes>
+				</batch:chunk>
+			    <batch:listeners>
+			        <batch:listener>
+			           <bean class="net.techreadiness.batch.CoreItemListener" scope="step">
+			            	<property name="fileId" value="#{jobParameters['jobFileId']}" />
+							<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+							<property name="userId" value="#{jobParameters['jobUserId']}" />
+							<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+							<property name="fileName" value="#{jobParameters['jobFileName']}" />
+			            </bean>
+			        </batch:listener>
+			    </batch:listeners>
+			</batch:tasklet>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener>
+				<bean class="net.techreadiness.batch.listener.JobCompletionListener" scope="prototype"/>
+			</batch:listener>
+		</batch:listeners>
+	</batch:job>
+	
+	<!--*********end Org Import -->
+	<!--******************************************end Spring Batch Job Definitions -->
+
+	<bean id="messageSource" class="net.techreadiness.text.CoreResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>customer</value>
+				<value>exceptions</value>
+			</list>
+		</property>
+	</bean>
+ </beans>

@@ -1,0 +1,188 @@
+@charset "utf-8";
+
+/* BASE / CORE CSS FOR FIXED WIDTH, THREE-COLUMN, CENTER COLUMN ELASTIC LAYOUT
+-------------------------------------------------------------------------------------*/
+
+/* ----- CONTAINERS: BACKGROUND ------------------------------------------ */
+body {
+	min-width: 993px;
+	/* Modern browser min-width (see below for IE6 fix) */
+}
+
+#background-layer-alpha {
+	width: 100%;
+	display: table;
+	position: relative;
+	overflow-x: hidden;
+}
+
+#background-layer-beta {
+	margin-left: auto;
+	margin-right: auto;
+	width: 993px;
+	padding: 0 7px;
+}
+
+#background-layer-gamma {
+	
+}
+
+/* ----- NAVIGATION: ALL --------------------------------------------- */
+#navigation-beta,.navigation-gamma,#navigation-delta,#navigation-epsilon {
+	clear: both;
+}
+
+#navigation-alpha ul li a,#navigation-beta ul li a,.navigation-gamma ul li a,#navigation-delta ul li a,#navigation-epsilon ul li a {
+	display: block;
+}
+
+/* ----- HEADER: BRAND BAR / NAVIGATION: GLOBAL ---------------------- */
+#logo-link-alpha img {
+	float: left;
+}
+
+#navigation-alpha {
+	float: right;
+}
+
+/* ------ HEADER: PROGRAM IDENTIFICATION ----------------------------- */
+#header-beta {
+	clear: both;
+	position: relative;
+	z-index: 3;
+	overflow: hidden;
+	margin-top: 8px;
+}
+
+#logo-link-beta img {
+	float: left;
+}
+
+#container-content-alpha {
+	float: left;
+}
+
+#header-column-beta {
+	float: right;
+}
+
+/* ----- CONTAINERS: PAGE CONTENT ------------------------------------ */
+#page-content-layer-alpha {
+	clear: both;
+	padding-left: 200px; /* content-column-alpha width */
+	padding-right: 150px; /* content-column-gamma width */
+	overflow: hidden;
+}
+
+#page-content-layer-beta,#page-content-layer-gamma {
+	padding-bottom: 20000px; /* 100% column height */
+	margin-bottom: -20000px; /* 100% column height */
+	display: inline-block;
+	width: 100%;
+}
+
+#page-content-layer-beta,#page-content-layer-gamma { //
+	padding-bottom: 0; //
+	margin-bottom: 0;
+}
+
+.content-column {
+	float: left;
+	padding-bottom: 20000px; /* 100% column height */
+	margin-bottom: -20000px; /* 100% column height */
+}
+
+/* IE [VERSION 7] FIX */
+*:first-child+html .content-column { /*padding-bottom: 0;*/
+	/*margin-bottom: 0;*/
+	
+}
+
+@media all and (-webkit-min-device-pixel-ratio:10000) , not all and
+	(-webkit-min-device-pixel-ratio:0) {
+	.content-column {
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
+}
+
+/* ----- PAGE CONTENT. CENTER. CURRENT PAGE ----------------------- */
+#content-column-alpha {
+	width: 100%;
+}
+
+#column-title-beta {
+	clear: both;
+}
+
+/* ----- PAGE CONTENT. LEFT. DATA VIEWS --------------------------- */
+#content-column-beta {
+	width: 200px; /* content-column-alpha width */
+	right: 200px; /* content-column-alpha width */
+	margin-left: -100%;
+}
+
+/* ----- PAGE CONTENT. RIGHT. HELP -------------------------------- */
+#content-column-gamma {
+	width: 150px; /* content-column-gamma width */
+	margin-right: -150px; /* content-column-gamma width */
+}
+
+/* IE [VERSION 6] FIX */
+* html #content-column-beta {
+	left: 150px; /* content-column-gamma full width */
+}
+
+/* ----- FOOTER: COPYRIGHT / ADDITIONAL PROGRAM IDENTIFICATION */
+#footer-alpha {
+	clear: both;
+}
+
+/* IE [VERSION 7] FIX */
+*:first-child+html #footer-alpha {
+	padding-bottom: 10000px;
+	/* 100% column height covers up content columns */
+	margin-bottom: -10000px;
+	/* 100% column height covers up content columns */
+	background: #fff;
+	/* IE6 & IE7 content columns backgrounds bleed through and need covered by a solid color */
+}
+
+/* IE [VERSION 6] FIX */
+* html #footer-alpha {
+	padding-bottom: 10000px;
+	/* 100% column height covers up content columns */
+	margin-bottom: -10000px;
+	/* 100% column height covers up content columns */
+	background: #fff;
+	/* IE6 & IE7 content columns backgrounds bleed through and need covered by a solid color */
+}
+
+#logo-link-gamma {
+	
+}
+
+#logo-link-gamma img {
+	float: left;
+}
+
+#container-content-beta {
+	float: left;
+}
+
+#logo-link-delta img {
+	float: left;
+}
+
+/* ----- FOOTER: BRANDING BAR */
+#footer-beta {
+	clear: both;
+	height: 30px;
+	width: 100%;
+	display: none;
+}
+
+#footer-beta #container-content-gamma a {
+	display: block;
+	height: 30px;
+}

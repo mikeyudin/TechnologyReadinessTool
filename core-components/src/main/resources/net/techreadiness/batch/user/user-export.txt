@@ -1,0 +1,11 @@
+action
+user.username
+stateCode
+user.firstName
+user.lastName
+#join(orgCodes, ':')
+#join(roleCodes, ':')
+user.activeBeginDate
+user.activeEndDate
+user.disableDate != null
+user.disableReason

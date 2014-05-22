@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+/* CSS MODIFICATION FOR CONTENT-COLUMN SIZES
+-------------------------------------------------------------------------------------*/
+
+
+	/* ----- CONTAINERS: PAGE CONTENT ------------------------------------ */
+	#page-content-layer-alpha {
+		padding-left: 150px;	/* A content-column-alpha width */
+		padding-right: 150px;	/* B content-column-gamma width */
+	}
+	
+	
+		/* ----- PAGE ONTENT. LEFT. DATA TREE ---------------------------- */
+		#content-column-beta {
+			width: 150px;			/* A content-column-alpha width */
+			right: 150px;			/* A content-column-alpha width */
+		}
+		
+		
+		/* ----- PAGE ONTENT. RIGHT. HELP -------------------------------- */
+		#content-column-gamma {
+			width: 150px;			/* B content-column-gamma width */
+			margin-right: -150px;	/* B content-column-gamma width */
+		}
+		
+		/* IE [VERSION 6] FIX */
+		* html #content-column-beta {
+			left: 150px;			/* B content-column-gamma width */
+		}

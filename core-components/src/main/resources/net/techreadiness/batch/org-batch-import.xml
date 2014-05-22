@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:batch="http://www.springframework.org/schema/batch" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd">
+
+	<bean id="orgFieldSetMapper" class="net.techreadiness.batch.CoreFieldSetMapper">
+		<constructor-arg value="net.techreadiness.batch.org.OrgData" />
+		<property name="binder" ref="orgBinder" />
+	</bean>
+
+	<bean id="orgMappingProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:net/techreadiness/batch/org/org-import-mapping.properties" />
+	</bean>
+
+	<bean id="orgBinder" class="net.techreadiness.batch.Binder">
+		<constructor-arg ref="orgMappingProperties" />
+	</bean>
+
+	<bean id="orgLineTokenizer" scope="step" class="net.techreadiness.batch.org.OrgLineTokenizer" />
+
+	<bean id="orgLineMapper" class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<property name="lineTokenizer" ref="orgLineTokenizer" />
+		<property name="fieldSetMapper" ref="orgFieldSetMapper" />
+	</bean>
+
+	<bean id="orgCoreLineMapper" class="net.techreadiness.batch.CoreLineMapper">
+		<property name="delegate" ref="orgLineMapper" />
+	</bean>
+
+	<bean id="orgReader" scope="step" class="org.springframework.batch.item.file.FlatFileItemReader">
+		<property name="resource" value="#{jobParameters['jobFileName']}" />
+		<property name="lineMapper" ref="orgCoreLineMapper" />
+		<property name="linesToSkip" value="1" />
+	</bean>
+
+	<bean id="orgWriter" scope="step" class="net.techreadiness.batch.org.OrgWriter">
+		<property name="fileId" value="#{jobParameters['jobFileId']}" />
+		<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+		<property name="userId" value="#{jobParameters['jobUserId']}" />
+		<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+	</bean>
+
+	<bean id="orgMatchingItemProcessor" class="org.springframework.batch.item.support.CompositeItemProcessor">
+		<property name="delegates">
+			<list>
+				<bean class="net.techreadiness.batch.org.OrgMatchingItemProcessor" scope="step">
+					<property name="fileId" value="#{jobParameters['jobFileId']}" />
+					<property name="scopeId" value="#{jobParameters['jobScopeId']}" />
+					<property name="userId" value="#{jobParameters['jobUserId']}" />
+					<property name="orgId" value="#{jobParameters['jobOrgId']}" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<batch:job id="csvOrgImport">
+		<batch:step id="orgFileFormatVerification" next="orgImport">
+			<batch:tasklet>
+				<batch:chunk reader="orgReader" writer="blackHoleWriter" commit-interval="100" skip-policy="alwaysSkipPolicy" />
+			</batch:tasklet>
+			<batch:listeners>
+				<batch:listener ref="itemCountStepListener" />
+				<batch:listener ref="fileFormatStepListener" />
+				<batch:listener ref="coreItemListener" />
+			</batch:listeners>
+		</batch:step>
+		<batch:step id="orgImport">
+			<batch:tasklet>
+				<batch:chunk reader="orgReader" processor="orgMatchingItemProcessor" writer="orgWriter" commit-interval="1"
+					skip-limit="500">
+					<batch:skippable-exception-classes>
+						<batch:include class="java.lang.Exception" />
+						<batch:include class="java.io.FileNotFoundException" />
+					</batch:skippable-exception-classes>
+				</batch:chunk>
+				<batch:listeners>
+					<batch:listener ref="coreItemListener" />
+					<batch:listener ref="fileStatusStepListener" />
+				</batch:listeners>
+			</batch:tasklet>
+		</batch:step>
+		<batch:listeners>
+			<batch:listener ref="jobCompletionListener" />
+		</batch:listeners>
+	</batch:job>
+
+</beans>

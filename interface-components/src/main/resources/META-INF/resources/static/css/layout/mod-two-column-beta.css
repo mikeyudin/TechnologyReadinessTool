@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+
+/* CSS MODIFICATION FOR MAKING 2 COLUMN LAYOUT, VERSION BETA
+-------------------------------------------------------------------------------------*/
+
+
+	/* ----- CONTAINERS: PAGE CONTENT ------------------------------------ */
+	#page-content-layer-alpha {
+		padding-right: 0;	/* B content-column-gamma width */
+	}
+		
+		
+		/* ----- PAGE ONTENT. RIGHT. HELP -------------------------------- */
+		#content-column-gamma {
+			width: 0;			/* B content-column-gamma width */
+			margin-right: 0;	/* B content-column-gamma width */
+			display: none;
+		}
+		
+		/* IE [VERSION 6] FIX */
+		* html #content-column-beta {
+			left: 0;			/* B content-column-gamma width */
+		}
+		
+		
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+
+/* ----- CSS GUIDELINES & COMPRESS THIS CSS FILE ----- */
+
+	/*
+	CSS Guidelines: http://chalkboard.ic.ncs.com/confluence/pages/viewpage.action?pageId=51650000
+	
+	Do not forget to duplicate and compress this CSS file for production.  Compress
+	removes comments and extra lines, thus reducing overall file sizes and optimizes
+	front-end performance and response times.
+	
+	Example: http://www.cssdrive.com/index.php/main/csscompressor
+	*/

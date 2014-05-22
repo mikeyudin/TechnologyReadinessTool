@@ -1,0 +1,90 @@
+@charset "utf-8";
+
+/* NAVIGATION OBJECTS
+-------------------------------------------------------------------------------------*/
+
+/* ----- NAVIGATION OBJECT: ALPHA -------------------------------------*/
+
+/*
+	Used for simple navigation ULs to correctly display pipes.
+	
+	See the Global and footer copyright navigation for examples.
+	*/
+.navigation-object-alpha ul {
+	overflow: hidden;
+	margin-bottom: 0.1em;
+	padding-bottom: 0.1em;
+}
+
+.navigation-object-alpha ul li {
+	float: left;
+	margin: 0 0.5em 0 -0.5em;
+	padding: 0 0.5em 0 0.5em;
+	line-height: 1.2em;
+	white-space: nowrap;
+}
+
+
+/* ----- NAVIGATION MOD CLASSES: CHANGE TAB SIZE ------------------------- */
+
+/*
+	Use this class in the markup to make the tabs small.  Add to the UL directly
+	surrounding the LIs/SPANs that contains the tab names.
+	
+	Font size classes can match specifically implemented navigation per theme.
+	
+	Classes:
+	- small-navigation
+	- large-navigation
+	*/
+
+/* MAKE TABS EXTRA SMALLER */
+.x-small-navigation {
+	font-size: 85%;
+}
+
+/* MAKE TABS SMALLER */
+.small-navigation {
+	font-size: 90%;
+}
+
+/* MAKE TABS MEDIUM-lARGE SIZED */
+.medium-large-navigation {
+	font-size: 110%;
+}
+
+/* MAKE TABS LARGER */
+.large-navigation {
+	font-size: 150%;
+}
+
+/* ----- Links Used for various popup (jquery dialog) functionality ------------------------- */
+
+.initially_hidden {
+	display: none !important;
+}
+
+/* ----- NAVIGATION MENU SECTION HEADER CLASS ------------------------- */
+/* Used for creating sub-sections out of menu contents
+*/
+.menu-header {
+	margin: 0.5em 0 0 0;
+	padding: 0 0 0 0.5em;
+	font-size: 125%;
+	color: #C58917;
+}
+
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+/* ----- CSS GUIDELINES & COMPRESS THIS CSS FILE ----- */
+
+/*
+	CSS Guidelines: http://chalkboard.ic.ncs.com/confluence/pages/viewpage.action?pageId=51650000
+	
+	Do not forget to duplicate and compress this CSS file for production.  Compress
+	removes comments and extra lines, thus reducing overall file sizes and optimizes
+	front-end performance and response times.
+	
+	Example: http://www.cssdrive.com/index.php/main/csscompressor
+	*/

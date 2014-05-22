@@ -1,0 +1,98 @@
+@charset "utf-8";
+
+
+/* ----- PARAGRAPHS ------------------------------------------------------ */
+
+body {
+	font-size: small;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+
+/* ----- PARAGRAPHS ------------------------------------------------------ */
+
+p {
+font:;
+color:;
+
+font-size:;
+font-family:;
+font-style:;
+font-weight:;
+font-variant:;
+
+text-align:;
+text-indent:;
+text-decoration:;
+text-shadow:;
+text-transform:;
+
+letter-spacing:;
+word-spacing:;
+}
+
+
+/* ----- LINKS ----------------------------------------------------------- */
+
+
+a {
+	text-decoration:none;
+	color:#4089B5;
+}
+
+a:hover {
+	text-decoration:underline;
+	color:#60A0C8;
+}
+
+a:active {
+	color:#38789E
+}
+
+a:focus {
+	color:#38789E;
+}
+
+
+/* ----- HEADINGS -------------------------------------------------------- */
+
+h1,h2,h3,h4,h5,h6 { font-weight: bold; color: #020202; }
+h1 a,h2 a,h3 a,h4 a,h5 a,h6 a,
+h1 a:visited ,h2 a:visited ,h3 a:visited ,h4 a:visited ,h5 a:visited ,h6 a:visited ,
+h1 a:active,h2 a:active,h3 a:active,h4 a:active,h5 a:active,h6 a:active,
+h1 a:focus ,h2 a:focus ,h3 a:focus ,h4 a:focus ,h5 a:focus ,h6 a:focus  { color: #020202; }
+h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover { color: #020202; text-decoration: none; }
+
+h1 { font-size: 2.6em; line-height: 1; margin-bottom: 0.2em; font-weight: normal; }	/* Product/Program site title */
+h2 { font-size: 1.9em; margin: 0 0 0.75em; } 										/* Page body title */
+h3 { font-size: 1.15em;} 															/* Right and left side-channels/bars & inner body page titles including modal window titles */
+h4 { font-size: 0.9em; }
+h5 { font-size: 0.8em; }
+h6 { font-size: 0.7em; }
+
+
+/* ----- LISTS ----------------------------------------------------------- */
+
+ul, ol { }
+ul { }
+ol { }
+ol li {  }
+ul li {  }
+li p {  }
+
+
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+
+/* ----- CSS GUIDELINES & COMPRESS THIS CSS FILE ----- */
+
+	/*
+	CSS Guidelines: http://chalkboard.ic.ncs.com/confluence/pages/viewpage.action?pageId=51650000
+	
+	Do not forget to duplicate and compress this CSS file for production.  Compress
+	removes comments and extra lines, thus reducing overall file sizes and optimizes
+	front-end performance and response times.
+	
+	Example: http://www.cssdrive.com/index.php/main/csscompressor
+	*/

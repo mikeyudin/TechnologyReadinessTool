@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<bean type="com.opensymphony.xwork2.config.PackageProvider" name="readiness.packageProvider" class="net.techreadiness.plugin.ReadinessPluginInitialize"/>
+	<bean class="net.techreadiness.plugin.ReportsTab" type="net.techreadiness.navigation.Tab" name="readinessIndicators" scope="singleton" />
+	<bean class="net.techreadiness.plugin.HomeTab" type="net.techreadiness.navigation.Tab" name="readinessHome" scope="singleton" />
+	
+</struts>

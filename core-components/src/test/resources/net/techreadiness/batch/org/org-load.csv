@@ -1,0 +1,4 @@
+typeCode,parentOrgCode,code,name,inactive,addressLine1,addressLine2,city,state,zipCode,phoneNumber,phoneExtension,faxNumber,contact1Name,contact1Title,contact1AddressLine1,contact1AddressLine2,contact1City,contact1State,contact1ZipCode,contact1PhoneNumber,contact1PhoneExtension,contact1FaxNumber,contact1EmailAddress,contact2Name,contact2Title,contact2AddressLine1,contact2AddressLine2,contact2City,contact2State,contact2ZipCode,contact2PhoneNumber,contact2PhoneExtension,contact2FaxNumber,contact2EmailAddress
+school,accomack,doe,Iowa DoE,FALSE,,,Des Moines,va,,,,,,,,,,,,,,,,,,,,,,,,,,
+school,accomack,iccsd,Iowa City Community School District,FALSE,,,Iowa City,va,52241,,,,,,,,,,,,,,,,,,,,,,,,,
+school,accomack,iccsd-re,Roosevelt Elementary,,,,Iowa City,va,52246,,,,,,,,,,,,,,,,,,,,,,,,,

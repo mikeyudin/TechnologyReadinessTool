@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.convention.default.parent.package" value="readiness-default" />
+	<constant name="struts.ui.templateSuffix" value="java" />
+	<constant name="struts.javatemplates.customThemes" value="net.techreadiness.ui.theme.ReadinessTheme" />
+	<constant name="struts.ui.theme" value="readiness"/>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	<constant name="struts.multipart.maxSize" value="1000000000" />
+	
+	<bean type="org.apache.struts2.convention.InterceptorMapBuilder" name="coreInterceptorBuilder" class="net.techreadiness.struts2.configuration.ScopeInterceptorMapBuilder"/>
+	<constant name="struts.convention.interceptorMapBuilder" value="coreInterceptorBuilder"/>
+	
+	<!-- The Struts 2 static content loader is not recommended: http://struts.apache.org/2.3.4.1/docs/static-content.html -->
+	<constant name="struts.serve.static" value="false" />
+	<constant name="struts.action.excludePattern" value=".*\\.css,.*\\.js,.*\\.jpg,.*\\.png"/>
+
+	<bean type="com.opensymphony.xwork2.conversion.impl.XWorkConverter" class="net.techreadiness.ui.util.ReadinessTypeConverterFactory" />
+	<bean class="net.techreadiness.ui.util.BaseEntityTypeConverter" />
+	
+	<bean type="ognl.PropertyAccessor" name="net.techreadiness.persistence.AuditedBaseEntityWithExt" class="net.techreadiness.ognl.BaseDOWithExtPropertyAccessor" />
+	<bean type="ognl.PropertyAccessor" name="net.techreadiness.service.object.BaseObjectWithExts" class="net.techreadiness.ognl.BaseObjectWithExtsPropertyAccessor" />
+	<bean type="ognl.PropertyAccessor" name="com.google.common.collect.Multimap" class="net.techreadiness.ognl.MultimapPropertyAccessor" />
+
+	<bean type="com.opensymphony.xwork2.TextProvider" class="net.techreadiness.ui.text.MessageSourceTextProvider"/>
+	<package name="readiness-default" extends="json-default">
+
+        <result-types>
+            <result-type name="lastAction" class="net.techreadiness.ui.util.LastActionResult" />
+            <result-type name="redirect" class="net.techreadiness.ui.util.MessageSavingRedirectResult" />
+            <result-type name="redirectAction" class="net.techreadiness.ui.util.MessageSavingRedirectActionResult" />
+        </result-types>
+
+		<interceptors>
+		    <interceptor name="dataModificationInterceptor" class="net.techreadiness.ui.util.DataModificationInterceptor" />
+			<interceptor name="savePreviousAction" class="net.techreadiness.ui.util.SavePreviousAction" />
+			<interceptor name="conversation" class="net.techreadiness.ui.util.ConversationScopeInterceptor" />
+			<interceptor name="secured" class="net.techreadiness.ui.security.SecuredInterceptor" />
+			<interceptor name="responseHeader" class="net.techreadiness.ui.util.ResponseHeaderInterceptor" />
+			
+			<interceptor-stack name="newDefaultStack">
+				<interceptor-ref name="responseHeader"/>
+				<interceptor-ref name="conversation"/>
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="savePreviousAction" />
+				<interceptor-ref name="secured"/>
+				<interceptor-ref name="dataModificationInterceptor"/>
+				<interceptor-ref name="annotationWorkflow" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="newDefaultStack" />
+		
+		<global-results>
+            <result name="error" type="chain">
+                <param name="actionName">error</param>
+                <param name="namespace">/</param>
+            </result>
+            <result name="notAuthorizedMessage" type="redirectAction">
+				<param name="actionName">not-authorized</param>
+				<param name="namespace">/</param>
+			</result>
+        </global-results>
+
+        <global-exception-mappings>
+             <exception-mapping result="invalid" exception="net.techreadiness.service.exception.ValidationServiceException"/>
+             <exception-mapping exception="java.lang.Exception" result="error" />
+             <exception-mapping
+				exception="net.techreadiness.service.exception.AuthorizationException"
+				result="notAuthorizedMessage" />
+        </global-exception-mappings>
+	</package>
+</struts>

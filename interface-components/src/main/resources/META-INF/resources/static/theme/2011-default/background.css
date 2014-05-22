@@ -1,0 +1,199 @@
+@charset "utf-8";
+
+/* BACKGROUND IMAGES
+-------------------------------------------------------------------------------------*/
+
+body {
+	background: #fff url(images/background/layer-0.jpg) repeat-x top center;
+}
+
+#background-layer-alpha {
+	/*background:url(images/background/layer-1.png) no-repeat top center;*/
+	display: table;
+	width: 100%;
+	height: 568px;
+	overflow-x: hidden;
+}
+
+/* IE [VERSION 6] FIX */
+* html #background-layer-alpha {
+	background: none;	
+}
+
+/* IE [VERSION 6 & 7] FIX */
+* html #background-layer-alpha,
+*:first-child+html #background-layer-alpha {
+	height: auto;
+}
+
+#background-layer-beta {
+}
+
+/* FOUR-SIDED SHADDOW CONTROL */
+	
+	
+	/* PROVIDE MARGINS FOR TOP & BOTTOM SHADOWS */
+	#background-layer-gamma,
+	#page-header-layer-alpha,
+	#page-navigation-layer-alpha,
+	#page-content-layer-alpha,
+	#page-header-layer-beta,
+	#page-navigation-layer-beta,
+	#navigation-gamma-alpha,
+	#navigation-gamma,
+	#page-content-layer-beta,
+	#footer-alpha {
+		padding-left: 8px;		/* Make gap for background left side shadow */
+		margin-left: -8px;		/* Fix gap offset by moving object back into place */
+		padding-right: 8px;		/* Make gap for background right side shadow */
+		margin-right: -8px;		/* Fix gap offset by moving object back into place */
+	}
+	
+	/* IE [VERSION 6] FIX */
+	* html #background-layer-gamma,
+	* html #page-header-layer-alpha,
+	* html #page-navigation-layer-alpha,
+	* html #navigation-gamma-alpha,
+	* html #navigation-gamma,
+	* html #page-content-layer-alpha,
+	* html #footer-alpha {
+		padding-left: 0;
+		margin-left: 0;
+		padding-right: 0;
+		margin-right: 0;
+	}
+	
+	/* IE [VERSION 7] FIX */
+	*:first-child+html #page-header-layer-alpha,
+	*:first-child+html #page-navigation-layer-alpha,
+	*:first-child+html #navigation-gamma-alpha,
+	*:first-child+html #navigation-gamma,
+	*:first-child+html #page-content-layer-alpha,
+	*:first-child+html #footer-alpha {
+		width: 100%;
+	}
+
+
+	/* TOP & BOTTOM SHADOWS */
+	* html #background-layer-delta-sub-container-one,
+	* html #background-layer-delta-sub-container-two {
+		display: none;
+	}
+		
+	#background-layer-delta-sub-one,
+	#background-layer-delta-sub-four {
+		float: left;
+		width: 100%;
+		padding-left: 8px;
+		margin-left: -8px;
+	}
+	
+	/* IE [ALL VERSIONS] FIX */
+	#background-layer-delta-sub-one,
+	#background-layer-delta-sub-four {
+		//height: 0;
+	}
+	
+	#background-layer-delta-sub-two,
+	#background-layer-delta-sub-five {
+		width: 99%;
+	}
+	
+	/* WEBKIT [SAFARI & CHROME] FIX */
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		#background-layer-delta-sub-two,
+		#background-layer-delta-sub-five {
+			padding-right: 1px;
+		}
+	}
+
+	#background-layer-delta-sub-three,
+	#background-layer-delta-sub-six {
+		float: right;
+		width: 1%;
+		padding-right: 8px;
+		margin-right: -8px;
+	}
+	
+	/* IE [ALL VERSIONS] FIX */
+	#background-layer-delta-sub-three,
+	#background-layer-delta-sub-six {
+		//height: 0;
+	}
+	
+	
+	/* TOP SHADOWS */
+	
+	#background-layer-delta-sub-one {
+		background: url(images/background/content-container-shadow-left-corners-x-repeats.png) no-repeat;
+		background-position: 0 0;
+		margin-top: -7px;
+	}
+	
+	#background-layer-delta-sub-two {
+		background: url(images/background/content-container-shadow-left-corners-x-repeats.png) repeat-x;
+		background-position: 0 -7px;
+		padding-top: 7px;
+	}
+
+	#background-layer-delta-sub-three {
+		background: url(images/background/content-container-shadow-right-corners.png) no-repeat;
+		background-position: 100% 0;
+		margin-top: -7px;
+		padding-top: 7px;
+	}
+	
+	
+	/* SIDE SHADOWS */
+	#page-content-layer-alpha, #navigation-gamma-alpha {
+		background: url(images/background/content-container-shadow-y-repeat-left.png) repeat-y;
+		background-position: 0 0;
+	}
+	
+	#page-content-layer-beta, #navigation-gamma {
+		background: url(images/background/content-container-shadow-y-repeat-right.png) repeat-y;
+		background-position: 100% -1px;
+	}
+	
+	
+	/* BOTTOM SHADOWS */
+	#background-layer-delta-sub-four {
+		background: url(images/background/content-container-shadow-left-corners-x-repeats.png) no-repeat;
+		background-position: 0 -14px;
+		margin-bottom: -7px;
+	}
+	
+	/* IE [VERSION 7] FIX */
+	*:first-child+html #background-layer-delta-sub-four {
+		padding-bottom:7px;
+	}
+	
+	#background-layer-delta-sub-five {
+		background: url(images/background/content-container-shadow-left-corners-x-repeats.png) repeat-x;
+		background-position: 0 -21px;
+		padding-bottom: 7px;
+	}
+
+	#background-layer-delta-sub-six {
+		background: url(images/background/content-container-shadow-right-corners.png) no-repeat;
+		background-position: 100% -7px;
+		margin-bottom: -7px;
+		padding-bottom: 7px;
+	}	
+	
+
+/* EXPLANATIONS AND EXAMPLES
+-------------------------------------------------------------------------------------*/
+
+
+/* ----- CSS GUIDELINES & COMPRESS THIS CSS FILE ----- */
+
+	/*
+	CSS Guidelines: http://chalkboard.ic.ncs.com/confluence/pages/viewpage.action?pageId=51650000
+	
+	Do not forget to duplicate and compress this CSS file for production.  Compress
+	removes comments and extra lines, thus reducing overall file sizes and optimizes
+	front-end performance and response times.
+	
+	Example: http://www.cssdrive.com/index.php/main/csscompressor
+	*/

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<constant name="struts.convention.default.parent.package" value="readiness-default" />
+	<constant name="struts.convention.action.includeJars" value=".*?/([\w-]+-(plugin)).*?jar(!/)?,.*?/readiness-ui.*?jar(!/)?" />
+	<!-- The Struts 2 static content loader is not recommended: http://struts.apache.org/2.3.4.1/docs/static-content.html -->
+	<constant name="struts.serve.static" value="false" />
+	<constant name="struts.action.excludePattern" value=".*\\.css,.*\\.js,.*\\.jpg,.*\\.png,/batch-admin/.*,/services/.*"/>
+</struts>

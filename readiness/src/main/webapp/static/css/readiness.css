@@ -1,0 +1,84 @@
+.btn {
+	border-radius: 1px;
+}
+.btn-default {
+	background-color: #fefefe;
+	background: linear-gradient(to bottom, #ffffff, #fefefe, #dedede);
+}
+
+.btn-primary {
+	background: linear-gradient(to bottom, #4694D7, #428bca, #3372A7);
+}
+
+.btn-success {
+  background: linear-gradient(to bottom, #05C702, #049F02, #037601);
+  border-color: #459F45;
+}
+
+.btn-success.disabled,
+.btn-success[disabled],
+fieldset[disabled] .btn-success,
+.btn-success.disabled:hover,
+.btn-success[disabled]:hover,
+fieldset[disabled] .btn-success:hover,
+.btn-success.disabled:focus,
+.btn-success[disabled]:focus,
+fieldset[disabled] .btn-success:focus,
+.btn-success.disabled:active,
+.btn-success[disabled]:active,
+fieldset[disabled] .btn-success:active,
+.btn-success.disabled.active,
+.btn-success[disabled].active,
+fieldset[disabled] .btn-success.active {
+  background: linear-gradient(to bottom, #05AC02, #047C02, #036801);
+  border-color: #3D8C3D;
+}
+
+.form-control {
+	border-radius: 0;
+	border-color: #DADADA;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	padding: 2px 4px;
+	height: auto;
+}
+
+.control-label {
+	font-weight: normal;
+	color: #6B6B6B;
+}
+
+.readiness-container {
+	width: 450px;
+	margin-top: 150px;
+}
+
+.readiness-logos + .readiness-logos {
+	margin-top: 10px;
+}
+
+.readiness-logos img + img {
+	margin-left: 10px;
+}
+
+.form-login {
+	box-shadow: 0 0 10px #8f8f8f;
+	margin: 20px 0;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-bottom: 20px;
+}
+
+.form-group {
+	margin-bottom: 8px;
+}
+
+.form-login h3 {
+	color: #004890;
+	font-size: 15px;
+}
+
+.account-links > .divider {
+	padding: 0;
+	color: #6B6B6B;
+}

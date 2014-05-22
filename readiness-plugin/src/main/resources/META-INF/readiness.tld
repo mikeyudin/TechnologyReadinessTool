@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+	version="2.1">
+
+	<description></description>
+	<display-name>Technology Readiness Tool Tag Library</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>trt</short-name>
+	<uri>http://techreadiness.net</uri>
+	
+	<tag>
+		<description></description>
+		<display-name>Readiness Status Indicator Color</display-name>
+		<name>statusColor</name>
+		<tag-class>net.techreadiness.plugin.tag.StatusColorTag</tag-class>
+
+		<body-content>scriptless</body-content>
+		<attribute>
+			<description></description>
+			<name>status</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+
+		<attribute>
+			<description></description>
+			<name>size</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<description>Display a legend of colors for a report</description>
+		<display-name>Readiness Report Legend</display-name>
+		<name>reportLegend</name>
+		<tag-class>net.techreadiness.plugin.tag.ReportLegend</tag-class>
+		<body-content>scriptless</body-content>
+		
+		<attribute>
+			<name>title</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		
+		<attribute>
+			<name>class</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+</taglib>

@@ -1,0 +1,4 @@
+action,username,stateCode,firstName,lastName,authorizedOrganizations,roles,activeBeginDate,activeEndDate,disabled,disabledReason
+c,tester@email.com,ie,Paul,Adams,12:34:56,67:78:89,,,no,
+c,tester@email.com,ie,Paul,Adams,13:34:56,67:78:90,1/1/2012,1/31/2012,no,
+c,tester@email.com,ie,Paul,Adams,14:34:56,67:78:91,1/2/2012,2/1/2012,yes,

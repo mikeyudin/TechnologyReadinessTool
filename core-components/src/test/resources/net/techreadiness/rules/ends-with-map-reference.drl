@@ -1,0 +1,12 @@
+import java.util.List;
+import java.util.Map;
+global java.util.List endedWith;
+
+rule "test endsWith Map Reference"
+when
+	Map($code : this["code"])
+	Map($someOtherCode : this["someOtherCode"])
+	String(this endsWith $someOtherCode) from $code
+then
+	endedWith.add($code);
+end

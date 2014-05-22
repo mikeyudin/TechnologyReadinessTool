@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="readiness" pageWidth="612" pageHeight="792" columnWidth="592" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" isFloatColumnFooter="true">
+	<property name="ireport.scriptlethandling" value="2"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="509"/>
+	<property name="ireport.y" value="364"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT" class="net.sf.jasperreports.engine.JasperReport" isForPrompting="false"/>
+	<parameter name="subtitle" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="title" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="aggregationMessage" class="java.lang.String"/>
+	<parameter name="consortium" class="java.lang.String"/>
+	<parameter name="mapUrl" class="java.lang.String"/>
+	<parameter name="legendTitle" class="java.lang.String">
+		<defaultValueExpression><![CDATA["Percentage Compliant"]]></defaultValueExpression>
+	</parameter>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band/>
+	</title>
+	<pageHeader>
+		<band height="399">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="231" height="29" forecolor="#818285" backcolor="#EEEFEF"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{aggregationMessage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="55" width="600" height="46"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="33" width="231" height="22" forecolor="#818285"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{consortium}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="437" y="107" width="145" height="140"/>
+				<graphicElement>
+					<pen lineColor="#EEEFEF"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="437" y="117" width="145" height="16" forecolor="#818285"/>
+				<box leftPadding="5"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{legendTitle}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="448" y="330" width="15" height="15" backcolor="#E5E5E5"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="448" y="161" width="15" height="15" backcolor="#B81F4B"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="448" y="181" width="15" height="15" backcolor="#F6851F"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="448" y="201" width="15" height="15" backcolor="#FCB913"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="448" y="221" width="15" height="15" backcolor="#00A15E"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="463" y="330" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Not a Member]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="442" y="140" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[TBD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="161" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[0%-25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="181" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[26%-50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="201" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[51%-75%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="221" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[76%-100%]]></text>
+			</staticText>
+			<image>
+				<reportElement x="9" y="170" width="400" height="215"/>
+				<imageExpression class="java.net.URL"><![CDATA[new java.net.URL($P{mapUrl})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="101" width="409" height="60"/>
+				<textElement markup="html">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{subtitle}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="385" width="592" height="14"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="463" y="310" width="90" height="15"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Member]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="448" y="310" width="15" height="15" backcolor="#463DE4"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Prevent"/>
+	</detail>
+	<pageFooter>
+		<band height="36">
+			<textField>
+				<reportElement x="0" y="0" width="592" height="36" forecolor="#818285"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

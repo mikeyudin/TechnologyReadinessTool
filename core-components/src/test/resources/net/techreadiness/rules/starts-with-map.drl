@@ -1,0 +1,11 @@
+import java.util.List;
+import java.util.Map;
+global java.util.List startedWith;
+
+rule "test startsWith"
+when
+	Map($code : this["code"])
+	String(this startsWith "hello") from $code
+then
+	startedWith.add($code);
+end

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+
+    <context:component-scan base-package="net.techreadiness"/>
+	<context:annotation-config />
+
+	<bean class="net.techreadiness.service.ServiceContext"/>
+    <bean class="net.techreadiness.service.DataModificationStatus"/>
+
+	<bean id="messageSource" class="net.techreadiness.text.CoreResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>readiness</value>
+				</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="HttpSession" class="org.springframework.mock.web.MockHttpSession"/>
+	
+	 <bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
+    
+    <bean class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry" />
+	</bean>
+	
+	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<property name="isolationLevelForCreate" value="ISOLATION_DEFAULT"/>
+		<property name="transactionManager" ref="transactionManager" />		
+	</bean>
+	
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+	
+	<bean id="schedulerFactoryBean"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jobFactory">
+			<bean class="net.techreadiness.batch.scheduler.AutowiringSpringBeanJobFactory" />
+		</property>
+		<property name="autoStartup" value="false" />
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.scheduler.instanceName">CoreScheduler</prop>
+				<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+				<prop key="org.quartz.threadPool.threadCount">1</prop>
+
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+                <prop key="org.quartz.jobStore.tablePrefix">core_batch.QRTZ_</prop>
+                <prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+                <prop key="org.quartz.jobStore.isClustered">true</prop>
+                <prop key="org.quartz.jobStore.clusterCheckinInterval">20000</prop>            
+			</props>
+		</property>
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+	</bean>
+
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value = "net.techreadiness"/>
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="false" />
+				<property name="generateDdl" value="false" />
+				<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+			</bean>
+		</property>
+
+		<property name="jpaPropertyMap">
+			<map>
+				<entry key="hibernate.cache.region.factory_class" value="net.sf.ehcache.hibernate.EhCacheRegionFactory" />
+				<entry key="hibernate.cache.use_query_cache" value="false" />
+				<entry key="hibernate.cache.use_second_level_cache" value="false" />
+				<entry key="hibernate.generate_statistics" value="true" />
+				<entry key="hibernate.show_sql" value="false" />
+				<entry key="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />            
+				<entry key="net.sf.ehcache.configurationResourceName" value="/META-INF/ehcache.xml" />
+			</map>
+		</property>
+	</bean>
+
+	
+<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3307/core" />
+		<property name="username" value="readinessUTUser" />
+		<property name="password" value="readinessUTUser" />
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+
+</beans>
+

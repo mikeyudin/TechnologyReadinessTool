@@ -1,0 +1,5 @@
+Application-Name: Technology Readiness Tool
+Permissions: all-permissions
+Application-Library-Allowable-Codebase: *.techreadiness.net *.ic.ncs.com localhost *.local 127.0.0.1
+Caller-Allowable-Codebase: *.techreadiness.net *.ic.ncs.com localhost *.local 127.0.0.1
+Codebase: *.techreadiness.net *.ic.ncs.com localhost *.local 127.0.0.1

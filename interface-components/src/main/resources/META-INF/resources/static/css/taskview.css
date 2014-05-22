@@ -1,0 +1,207 @@
+.task-container {
+	clear: both;
+	margin-left: auto;
+	margin-right: auto;
+	width: 97%;
+	min-height: 400px;
+	box-shadow: 0px 0px 13px #888888;
+	background-color: white;
+}
+
+div.container div.data-grid-container {
+	margin: 0em;
+}
+
+.task-flow-content {
+	padding: .8em;
+	clear: both;
+}
+
+.round-top {
+	border-top-left-radius: .8em;
+	border-top-right-radius: .8em;
+}
+
+table.taskViewContainer {
+	width: 100%;
+}
+
+li.taskViewControl {
+	width: 200px;
+	display: inline-block;
+}
+
+.taskViewControl + .taskViewControl {
+	margin-left: 1.4em;
+}
+
+ul.task-menu {
+	list-style-type: none;
+	padding-top: 5px;
+	border-bottom: 2px solid #3366CC;
+}
+
+ul.task-menu li {
+	font-weight: bold;
+	text-align: center;
+	width: 14em;
+	display: inline-block;
+	background-color: #6699CC;
+	color: white;
+	margin-left: .3em;
+	padding-bottom: .4em;
+	padding-top: .4em;
+}
+
+ul.task-menu a.task-name {
+	color: white;
+}
+
+ul.task-menu li div.exit-button-area {
+	text-align: right;
+	width: 50px;
+	float: right;
+}
+
+ul.task-menu li div.title {
+	padding: 5px 0px 5px 0px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #f1f1f1;
+}
+
+ul.task-menu li.progress-current {
+	background-color: #3366CC;
+}
+
+ul.task-detail-options {
+	float: left;
+	margin-bottom: 1em;
+	border-left: solid 1px #D4D4D4;
+	width: 16em;
+}
+
+ul.task-detail-options li {
+	padding: .5em;
+	border-bottom: solid 1px #D4D4D4;
+	background-color: #F2F2F2;
+}
+
+ul.task-detail-options li.selected {
+	background: transparent;
+	font-weight: bold;
+}
+
+ul.task-detail-options li.error {
+	background-color: #FDF2F2;
+	
+}
+
+ul.task-detail-options li.error a {
+	color: #C32929;
+}
+
+td.task-detail {
+	border-left: solid 1px #D4D4D4;
+	padding: 5px;
+}
+
+div.task-detail {
+	border-left: solid 1px #D4D4D4;
+	padding: 1em;
+	float: left;
+	width: 75%;
+}
+
+div.task-detail-header {
+	background: #DEDEDE;
+	padding: .5em;
+	font-weight: bold;
+	overflow: auto;
+}
+
+.task-flow-content .dataViewControl .dataViewControlHeader {
+	color: black;
+}
+
+.task-flow-content .dataViewControl .dataViewControlBody {
+	min-height: 2em;
+}
+
+#roleTable {
+	border-collapse: separate;
+	border-spacing: 2px 0px;
+	width: 100%;
+}
+
+th.roleHeader {
+	text-align: center;
+	vertical-align: middle;
+	background: #E4E4E4;
+	color: #6B6B6B;
+	font-size: 80%;
+	font-weight: bold;
+}
+
+td.roleCheckboxColumn {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.taskflow-actions {
+	padding-top: .4em;
+	padding-bottom: .4em;
+	padding-right: .8em;
+	text-align: right;
+}
+
+div.task-flow-header {
+	background-color: #F2F8FF;
+	padding-top: .4em;
+	border-bottom: 1px solid gray;
+}
+
+div.task-flow-footer {
+	background-color: #F2F8FF;
+	clear: both;
+	border-top: 1px solid gray;
+}
+
+.mode-icon {
+	margin-right: 8px;
+	margin-left: 8px;
+	vertical-align: middle;
+}
+
+.task-selection .dataViewControlHeader h4{
+	padding:4px;
+}
+
+.task-selection .dataViewControlBody {
+	padding:4px;
+	font-size:.8em;
+}
+
+.taskViewControl .dataViewControl {
+margin: 0 0 15px 0;
+	width:200px;
+}
+
+.taskViewControl .dataViewControlBody {
+	font-size: 80%;
+	padding: 7px 0 15px 5px;
+}
+
+.taskViewControl .dataViewControlConfig {
+	width:30em;
+	text-align:left;
+}
+
+.taskViewControl .dataViewControlConfig a {
+	margin: 0;
+}
+
+.selected-item {
+	padding: 3px 8px;
+	font-size: 12px;
+}

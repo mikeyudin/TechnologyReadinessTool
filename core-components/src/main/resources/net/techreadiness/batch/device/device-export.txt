@@ -1,0 +1,15 @@
+device.org.localCode
+stateCode
+device.count
+device.name
+device.location
+device.operatingSystem
+device.processor
+device.memory
+device.screenResolution
+device.monitorDisplaySize
+device.browser
+device.wireless
+device.deviceType
+device.environment
+device.owner
