@@ -10,23 +10,11 @@
 	<packaging>pom</packaging>
 
 	<scm>
-		<connection>scm:git:ssh://devops-tools.pearson.com/ace/technology-readiness-tool.git</connection>
-		<developerConnection>scm:git:ssh://devops-tools.pearson.com/ace/technology-readiness-tool.git</developerConnection>
-		<url>https://devops-tools.pearson.com/stash/projects/ACE/repos/technology-readiness-tool/browse</url>
+		<connection>scm:git:https://github.com/SmarterApp/TechnologyReadinessTool.git</connection>
+		<developerConnection>scm:git:https://github.com/SmarterApp/TechnologyReadinessTool.git</developerConnection>
+		<url>https://github.com/SmarterApp/TechnologyReadinessTool</url>
 		<tag>HEAD</tag>
 	</scm>
-
-	<distributionManagement>
-		<repository>
-			<id>platform.release</id>
-			<url>http://unicorn.ic.ncs.com:8081/nexus/content/repositories/releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>platform.release</id>
-			<uniqueVersion>false</uniqueVersion>
-			<url>http://unicorn.ic.ncs.com:8081/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 
 	<modules>
 		<module>core-components</module>
