@@ -11,15 +11,15 @@ in schools.
 
 ## Dependencies
 
-- Java 1.7 (http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
-- Tomcat 7 (http://tomcat.apache.org/download-70.cgi)
-- MySQL (http://dev.mysql.com/downloads/mysql/)
+- [Java 1.7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+- [Tomcat 7](http://tomcat.apache.org/download-70.cgi)
+- [MySQL](http://dev.mysql.com/downloads/mysql/)
 
 ## Compiling Java
 TRT uses Maven to compile and package the deployable binaries.
 
 ### Install Maven
-Download the Maven binary (http://maven.apache.org/download.cgi) or install with your package manager.
+Download the [Maven binary](http://maven.apache.org/download.cgi) or install with your package manager.
 
 The project is made up of several sub-modules
 
@@ -35,25 +35,30 @@ target directory.
 ## Configuration
 
 Each application looks for a .properties file at startup for environment specific configuration.
+
 - application-batch.properties - batch-webapp
 - application-customer.properties - readiness
 
 The default values for the values can be found in:
+
 - batch-webapp/WEB-INF/application-batch-dev.properties
 - readiness/WEB-INF/application-customer-dev.properties
 
 ### Properties
+#### Cache Configuration
 - cache.config: Controls the ehcache configuration file that is loaded. 'dev' is the only value that is supported, ehcache-[dev].xml is the file that is loaded.
 - cache.second.level: Passthrough property to 'hibernate.cache.use_second_level_cache' when configuring the Hibernate EntityManager. 'true' and 'false' are valid values.
 
-The app.customer.* properties are used to generate URLs for login, password reset and links in email templates
+#### Application Deployment Configuration
+The app.customer.* properties are used to generate URLs for login, password reset and links in email templates. These properties do not change the URL of the application. This must be done through DNS and Tomcat configuration.
 
 - app.customer.host: The host portion of a URL that the interface application is deployed at.
 - app.customer.port: The port portion of a URL that the interface application is deployed at.
 - app.customer.contextPath: The base path portion of a URL that the interface application is deployed at.
 - app.customer.protocol: The protocol portion of a URL that the interface application is deployed at.
 
-emailService* properties control how the system generates and sends emails
+#### E-mail configuration
+emailService* properties control how the system generates and sends emails.
 
 - emailServiceHostName: The host name of the SMTP server that should be used to send emails.
 - emailServiceReplyAddress: The email address that will populate the FROM field.
@@ -65,9 +70,11 @@ emailService* properties control how the system generates and sends emails
 - emailServiceUseTLS: Use TLS to connect to the SMTP server, true or false.
 - emailServiceUseSSL: Use SSL to connect to the SMTP server, true or false.
 
+#### User File Upload Configuration
 - file.upload.dir: The directory that will be used to hold file uploads for batch processing.
 - file.temp.export.dir: The directory that will be used for temporary files during batch processing.
 
+#### Authentication Configuration
 - login.authentication: The type of authentication to use. Valid values are 'dev' and 'cas'. 'dev' mode does not require a password.
 - cas.service.url: The service that represents the TRT to the CAS server.
 - cas.login.url: The URL for the CAS login page
@@ -89,6 +96,7 @@ The applications require a database connection pool in JNDI. This is defined in 
 - [db_password]: The password of the MySQL user.
 - [schema_name]: The schema name that has the tables for the readiness application. This should be ‘core’. References to other schemas need to be prefixed in the query.
 
+```xml
     <Resource auth="Container"
       driverClassName="com.mysql.jdbc.Driver"
       name="core_connection"
@@ -97,6 +105,7 @@ The applications require a database connection pool in JNDI. This is defined in 
       type="javax.sql.DataSource"
       url="jdbc:mysql://localhost:3306/[schema_name]“
       validationQuery="/* ping */" />
+```
 
 ## Database
 Execute the database script to create the required tables for the application. The script is ‘database.sql’. The application requires three schemas to run: core, core_batch and readiness. The core schema contains organization, device and consortia information. The core_batch schema has the tables required for dependencies on Quartz and Spring Batch. The readiness schema has tables for snapshot reporting data.
