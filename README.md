@@ -100,10 +100,10 @@ The applications require a database connection pool in JNDI. This is defined in 
     <Resource auth="Container"
       driverClassName="com.mysql.jdbc.Driver"
       name="core_connection"
-      username=“[db_username]”
-      password=“[db_password]“
+      username="[db_username]"
+      password="[db_password]"
       type="javax.sql.DataSource"
-      url="jdbc:mysql://localhost:3306/[schema_name]“
+      url="jdbc:mysql://localhost:3306/[schema_name]"
       validationQuery="/* ping */" />
 ```
 
