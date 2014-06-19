@@ -8,6 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ScopeDO.class)
 public abstract class ScopeDO_ {
 
+	public static volatile SingularAttribute<ScopeDO, String> path;
 	public static volatile ListAttribute<ScopeDO, OrgDO> orgs;
 	public static volatile ListAttribute<ScopeDO, ScopeTreeDO> ancestorScopeTrees;
 	public static volatile SingularAttribute<ScopeDO, ScopeDO> parentScope;

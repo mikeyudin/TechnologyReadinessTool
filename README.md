@@ -1,6 +1,6 @@
 # Technology Readiness Tool Documentation
 
-Technology Readiness Tool (TRT) is a Java web application that stores information about resources used for online testing 
+Technology Readiness Tool (TRT) is a Java web application that stores information about resources used for online testing
 in schools.
 
 ## What is included
@@ -84,11 +84,11 @@ emailService* properties control how the system generates and sends emails.
 
 ## Tomcat Configuration
 
-## Properties files
+### Properties files
 
 The properties files described in the Configuration section can be outside of the application packages. This can be configured in Tomcat by setting a shared loader location for adding files to deployed application’s classpath. See Tomcat’s documentation about the shared loader and the ‘shared.loader’ property in the [tomcat_home]/conf/catalina.properties file.
 
-## Database Connection Pool
+### Database Connection Pool
 
 The applications require a database connection pool in JNDI. This is defined in Tomcat’s context.xml file.
 
@@ -100,12 +100,20 @@ The applications require a database connection pool in JNDI. This is defined in 
     <Resource auth="Container"
       driverClassName="com.mysql.jdbc.Driver"
       name="core_connection"
-      username=“[db_username]”
-      password=“[db_password]“
+      username="[db_username]"
+      password="[db_password]"
       type="javax.sql.DataSource"
-      url="jdbc:mysql://localhost:3306/[schema_name]“
+      url="jdbc:mysql://localhost:3306/[schema_name]"
       validationQuery="/* ping */" />
 ```
 
+NOTE: Be sure [MySQL Connector/J driver](http://dev.mysql.com/downloads/connector/j/) is included in Tomcat's lib/ directory.
+
 ## Database
 Execute the database script to create the required tables for the application. The script is ‘database.sql’. The application requires three schemas to run: core, core_batch and readiness. The core schema contains organization, device and consortia information. The core_batch schema has the tables required for dependencies on Quartz and Spring Batch. The readiness schema has tables for snapshot reporting data.
+
+## Dev Notes
+
+A default user is included.  If you manage to deployed your WARs and configure everything correctly, and see a login page, you may login with the username "ready_admin" leaving the password field blank.
+
+

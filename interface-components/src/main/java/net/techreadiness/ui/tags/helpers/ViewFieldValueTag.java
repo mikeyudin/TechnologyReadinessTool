@@ -84,10 +84,6 @@ public class ViewFieldValueTag extends BaseTag {
 		return field;
 	}
 
-	public void setField(ViewField field) {
-		this.field = field;
-	}
-
 	public void setField(ViewComponent field) {
 		this.field = field;
 	}
