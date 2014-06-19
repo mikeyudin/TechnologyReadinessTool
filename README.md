@@ -129,7 +129,7 @@ lower_case_table_names=1
 
 ### Logging In
 
-The database script creates a single user with the username 'ready_admin'. The application has two authentication modes, dev and cas. The default is dev. This allows authentication for any valid username without a password. Enabling 'cas' mode will force the application to use a [CAS](http://www.jasig.org/cas) instance for authenticating users. See [authentication properties][authconfiguration] section for the required configuration values when using CAS.
+The database script creates a single user with the username 'ready_admin'. The application has two authentication modes, dev and cas. The default is dev. This allows authentication for any valid username without a password. Enabling 'cas' mode will force the application to use a [CAS](http://www.jasig.org/cas) instance for authenticating users. See [authentication properties](authconfiguration) section for the required configuration values when using CAS.
 
 ### Struts
 
