@@ -74,7 +74,7 @@ emailService* properties control how the system generates and sends emails.
 - file.upload.dir: The directory that will be used to hold file uploads for batch processing.
 - file.temp.export.dir: The directory that will be used for temporary files during batch processing.
 
-#### Authentication Configuration
+#### Authentication Configuration [authconfiguration]
 - login.authentication: The type of authentication to use. Valid values are 'dev' and 'cas'. 'dev' mode does not require a password.
 - cas.service.url: The service that represents the TRT to the CAS server.
 - cas.login.url: The URL for the CAS login page
@@ -90,11 +90,19 @@ The properties files described in the Configuration section can be outside of th
 
 ### Database Connection Pool
 
-The applications require a database connection pool in JNDI. This is defined in Tomcat’s context.xml file.
+The applications require a database connection pool in JNDI.
+
+#### JDBC Driver
+
+The connection pool requires a JDBC driver. Download the [MySQL Connection/J](http://dev.mysql.com/downloads/connector/j/) archive. The JDBC driver is packaged as a JAR. Copy the 'mysql-connector-java-[version]-bin.jar' to the [tomcat_home]/lib directory.
+
+#### Defining the Connection Pool
+
+Add a resource element to Tomcat’s [tomcat_home]/conf/context.xml file.
 
 - [db_username]: The username of a user defined in the MySQL server.
 - [db_password]: The password of the MySQL user.
-- [schema_name]: The schema name that has the tables for the readiness application. This should be ‘core’. References to other schemas need to be prefixed in the query.
+- [schema_name]: The schema name that has the tables for the readiness application. This should be 'core'. References to other schemas need to be prefixed in the query.
 
 ```xml
     <Resource auth="Container"
@@ -107,13 +115,22 @@ The applications require a database connection pool in JNDI. This is defined in 
       validationQuery="/* ping */" />
 ```
 
-NOTE: Be sure [MySQL Connector/J driver](http://dev.mysql.com/downloads/connector/j/) is included in Tomcat's lib/ directory.
-
 ## Database
-Execute the database script to create the required tables for the application. The script is ‘database.sql’. The application requires three schemas to run: core, core_batch and readiness. The core schema contains organization, device and consortia information. The core_batch schema has the tables required for dependencies on Quartz and Spring Batch. The readiness schema has tables for snapshot reporting data.
+Execute the database script to create the required tables for the application. The script is 'database.sql'. The application requires three schemas to run: core, core_batch and readiness. The core schema contains organization, device and consortia information. The core_batch schema has the tables required for dependencies on Quartz and Spring Batch. The readiness schema has tables for snapshot reporting data.
 
-## Dev Notes
+### MySQL Configuration
 
-A default user is included.  If you manage to deployed your WARs and configure everything correctly, and see a login page, you may login with the username "ready_admin" leaving the password field blank.
+Enable case insensitive table names for queries. With this option MySQL will store all tables in lowercase and queries can reference tables in either uppercase or lowercase. Example my.cnf:
+```properties
+lower_case_table_names=1
+```
 
+## Developer Mode
 
+### Logging In
+
+The database script creates a single user with the username 'ready_admin'. The application has two authentication modes, dev and cas. The default is dev. This allows authentication for any valid username without a password. Enabling 'cas' mode will force the application to use a [CAS](http://www.jasig.org/cas) instance for authenticating users. See [authentication properties][authconfiguration] section for the required configuration values when using CAS.
+
+### Struts
+
+Struts also supports a developer mode. This is enabled by defining a constant in either a struts-plugin.xml or struts.xml. See the Struts [documentation](http://struts.apache.org/release/2.3.x/docs/devmode.html) for more information.
