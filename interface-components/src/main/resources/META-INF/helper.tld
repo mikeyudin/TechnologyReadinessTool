@@ -8,7 +8,6 @@
 	<short-name>h</short-name>
 	<uri>http://techreadiness.net/helpers</uri>
 
-
 	<tag>
 		<name>evaluateTagBody</name>
 		<tag-class>net.techreadiness.ui.tags.helpers.EvaluateTagBodyHelper</tag-class>
@@ -16,6 +15,7 @@
 		<attribute>
 			<name>tag</name>
 			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.ui.tags.BaseTag</type>
 		</attribute>
 	</tag>
 
@@ -27,11 +27,13 @@
 			<name>tag</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>javax.servlet.jsp.tagext.JspTag</type>
 		</attribute>
 		<attribute>
 			<name>tagBody</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>javax.servlet.jsp.tagext.JspFragment</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -45,6 +47,7 @@
 			<name>field</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<type>net.techreadiness.service.common.ViewComponent</type>
 		</attribute>
 
 		<attribute>
@@ -65,30 +68,35 @@
 			<description>renders the tag as the value only, without a label.</description>
 			<name>valueOnly</name>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 
         <attribute>
             <description>Hide the label when displaying the field's input element</description>
             <name>hideLabel</name>
             <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
 
         <attribute>
             <description>Hide the tooltip when displaying the field's input element</description>
             <name>hideTooltip</name>
             <rtexprvalue>true</rtexprvalue>
+            <type>boolean</type>
         </attribute>
 
 		<attribute>
 			<description>Hide the field errors when displaying the field's input element</description>
 			<name>hideErrors</name>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 
 		<attribute>
 			<description>Display the label and the field value instead of the input.</description>
 			<name>readOnly</name>
 			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
 		</attribute>
 	</tag>
 
