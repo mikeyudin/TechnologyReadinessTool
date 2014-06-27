@@ -90,6 +90,7 @@ public interface ScopeDAO extends BaseDAO<ScopeDO> {
 	Collection<ScopeDO> findParentsOfScope(Long scopeId);
 
 	/**
+	 * @return Child scopes of the root scope
 	 * 
 	 */
 	List<ScopeDO> getChildScopesOfRoot();

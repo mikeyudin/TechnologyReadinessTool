@@ -1,7 +1,6 @@
 package net.techreadiness.service;
 
 import java.util.List;
-import java.util.Map;
 
 import net.techreadiness.service.object.Device;
 import net.techreadiness.service.object.Org;
@@ -38,6 +37,7 @@ public interface DeviceService extends BaseServiceWithValidation {
 	 *            The {@link ServiceContext} to be used for this service call.
 	 * @param device
 	 *            The {@link Device} to to created in the DB.
+	 * @param orgId Organization the device belongs to
 	 * @return The newly created {@code Device}, with deviceId populated.
 	 */
 	Device create(ServiceContext context, Device device, Long orgId);
@@ -50,6 +50,7 @@ public interface DeviceService extends BaseServiceWithValidation {
 	 *            The {@link ServiceContext} to be used for this service call.
 	 * @param device
 	 *            The {@link Device} to be updated in the DB.
+	 * @param orgId Organization the device belongs to
 	 */
 	void persist(ServiceContext context, Device device, Long orgId);
 
@@ -73,6 +74,8 @@ public interface DeviceService extends BaseServiceWithValidation {
 	 *            The {@link ServiceContext} to be used for this service call.
 	 * @param device
 	 *            The {@link Device} to be updated in the DB.
+	 * @param orgId Organization the device belongs to
+	 * @return Updated device
 	 */
 	Device update(ServiceContext context, Device device, Long orgId);
 
@@ -85,15 +88,6 @@ public interface DeviceService extends BaseServiceWithValidation {
 	 *            The {@link Device} to be deleted from the DB.
 	 */
 	void delete(ServiceContext context, Device device);
-
-	/**
-	 *
-	 * @param context
-	 *            The {@link ServiceContext} to be used for this service call.
-	 * @param map
-	 *            The {@link Map} representing a Device object that is to be updated.
-	 */
-	Device update(ServiceContext context, Map<String, String> map, Long orgId, Long scopeId);
 
 	/**
 	 *

@@ -5,7 +5,8 @@ import java.util.Iterator;
 
 /**
  * 
- * An Itertor wrapper which allows observation of added and removed elements via an ElementObserver
+ * An Iterator wrapper which allows observation of added and removed elements via an ElementObserver
+ * @param <T> Type of object being iterated over
  * 
  */
 public class ObservableIterator<T> implements Iterator<T>, Serializable {

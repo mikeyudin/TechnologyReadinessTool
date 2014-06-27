@@ -117,16 +117,6 @@ implements DeviceService {
 	}
 
 	@Override
-	@CoreDataModificationStatus(modificationType = ModificationType.UPDATE, entityClass = DeviceDO.class)
-	public Device update(ServiceContext context, Map<String, String> map, Long orgId, Long scopeId) {
-		DeviceDO deviceDO = updateDevice(context, map, scopeId, orgId);
-
-		storeExtFields(context, deviceDO, deviceExtDao, EntityTypeCode.DEVICE, scopeId);
-
-		return getMappingService().map(deviceDAO.update(deviceDO));
-	}
-
-	@Override
 	@CoreDataModificationStatus(modificationType = ModificationType.DELETE, entityClass = DeviceDO.class)
 	public void delete(ServiceContext context, Long deviceId) {
 		DeviceDO deviceDO = deviceDAO.getById(deviceId);

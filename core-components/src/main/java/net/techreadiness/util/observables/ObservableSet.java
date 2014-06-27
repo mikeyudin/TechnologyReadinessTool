@@ -7,6 +7,7 @@ import java.util.Iterator;
 /**
  * 
  * A Set wrapper which allows observation of added and removed elements via an ElementObserver
+ * @param <T> Type of object in the collection
  * 
  */
 public class ObservableSet<T> extends AbstractSet<T> implements ElementObserver<T> {

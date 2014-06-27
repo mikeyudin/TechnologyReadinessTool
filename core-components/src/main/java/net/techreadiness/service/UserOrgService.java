@@ -15,6 +15,7 @@ public interface UserOrgService extends BaseService {
 	 * @param orgId
 	 *            The id of the organization the user should have access to.
 	 * @param scopeId
+	 * @return New user organization access
 	 */
 	UserOrg persist(ServiceContext context, Long userId, Long orgId);
 

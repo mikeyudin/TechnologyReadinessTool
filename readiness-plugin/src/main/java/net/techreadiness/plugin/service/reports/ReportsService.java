@@ -32,6 +32,7 @@ public interface ReportsService extends BaseService {
 	 *            The org parent org for which a count of ChildOrgs will be calculated
 	 * @param scope
 	 *            The scope for which the orgs must belong to
+	 * @return The total number of records in the result set.
 	 */
 	Integer retrieveTotalCount(Org org, Scope scope);
 
@@ -53,10 +54,13 @@ public interface ReportsService extends BaseService {
 	 *      createDate - This is the date and time that the Device Indicators were calculated.
 	 * </code>
 	 * </pre>
+	 * @param snapshotWindowId The snapshot to find data for.
+	 * @param orgId The organization to find data for.
+	 * @param minimumOrRecommendedFlag The type of snapshot information requested.
 	 *
 	 * @return The Map of data that contains the information about Consortium Level Device Assessment data.
 	 */
-	QueryResult<Map<String, String>> retrieveSummaryForOrg(Long snapshowWindowId, Long orgId,
+	QueryResult<Map<String, String>> retrieveSummaryForOrg(Long snapshotWindowId, Long orgId,
 			MinimumRecommendedFlag minimumOrRecommendedFlag);
 
 	/**
@@ -123,12 +127,7 @@ public interface ReportsService extends BaseService {
 	 *            The list of snapshot ids to get the data for.
 	 * @param orgId
 	 *            The org to get the child org data for.
-	 * @param retrieveAll
-	 *            Gets all rows (ie. for exports)
-	 * @param startingRow
-	 *            If not getting all rows, the row to start with
-	 * @param numberOfRows
-	 *            If not getting all rows, the number of rows to get.
+	 * @param minimumOrRecommendedFlag The type of snapshot information to return.
 	 *
 	 * @return Snapshot information for the organization and snapshots specified.
 	 */
@@ -150,6 +149,7 @@ public interface ReportsService extends BaseService {
 	 *            The list of snapshot ids to get the data for.
 	 * @param orgId
 	 *            - the org to get the child org data for.
+	 * @param minimumOrRecommendedFlag The type of snapshot information to return.
 	 * @param retrieveAll
 	 *            - gets all rows (ie. for exports)
 	 * @param startingRow
@@ -187,12 +187,7 @@ public interface ReportsService extends BaseService {
 	 *
 	 * </code>
 	 * </pre>
-	 *
-	 * @param consortiumScope
-	 *            The scope that is tied to the Consortium. Minimum recommended values are stored by consortium scope. a
-	 *            consortium.
-	 * @param normalSandBoxMode
-	 *            Indicates to see if this is for normal usage or sandbox usage.
+	 * @param snapshotWindowId The snapshot to get values for. 
 	 * @return The Map of data that contains the information about District Level Device Assessment data.
 	 */
 
@@ -228,19 +223,17 @@ public interface ReportsService extends BaseService {
 	 *
 	 * </code>
 	 * </pre>
-	 *
-	 * @param districtOrg
-	 *            the district org
-	 * @param consortiumScope
-	 *            The scope that is tied to the Consortium. This is used to retrieve the organizations that belong to a
-	 *            consortium.
+	 * @param snapshotWindowId The snapshot to get data for
+	 * @param orgId The parent organization
+
 	 * @param surveyQuestionTypeCode
 	 *            Code for the type of Survey Questions.
+	 * @param retrieveAll 
 	 * @param startingRow
 	 *            - The starting row of the result set that is to be returned
 	 * @param numberOfRows
 	 *            - The total number of rows to be returned.
-	 * @return the list
+	 * @return Summary data for child organizations of {@code orgId}
 	 */
 	QueryResult<Map<String, String>> retrieveSurveySummaryForChildOrgs(Long snapshotWindowId, Long orgId,
 			String surveyQuestionTypeCode, boolean retrieveAll, Integer startingRow, Integer numberOfRows);
@@ -263,12 +256,8 @@ public interface ReportsService extends BaseService {
 	 *
 	 * </code>
 	 * </pre>
-	 *
-	 * @param districtOrg
-	 *            the district org
-	 * @param consortiumScope
-	 *            The scope that is tied to the Consortium. This is used to retrieve the organizations that belong to a
-	 *            consortium.
+	 * @param snapshotWindowId The snapshot to get data for
+	 * @param orgId Organization to get data for
 	 * @param surveyQuestionTypeCode
 	 *            Code for the type of Survey Questions.
 	 * @return the list

@@ -12,6 +12,8 @@ public interface OrgDAO extends BaseDAO<OrgDO> {
 	 * 
 	 * @param scopeId
 	 *            The scope to which the orgs belong
+	 * @param orgId The id of the parent organization.
+	 * @param maxResults The maximum number of results to return.
 	 * @return The list of {@link OrgDO}s coming under the scope.
 	 */
 	List<OrgDO> findByScopeId(Long scopeId, Long orgId, int maxResults);

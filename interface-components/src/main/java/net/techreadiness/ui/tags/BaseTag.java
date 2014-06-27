@@ -120,6 +120,8 @@ public abstract class BaseTag extends SimpleTagSupport implements DynamicAttribu
 
 	/**
 	 * Evaluate the body of this tag, but do not write the results to any page.
+	 * @throws JspException If there is an error invoking the body.
+	 * @throws IOException If there is an error writing to the stream.
 	 */
 	public final void invokeBody() throws JspException, IOException {
 		if (getJspBody() != null) {

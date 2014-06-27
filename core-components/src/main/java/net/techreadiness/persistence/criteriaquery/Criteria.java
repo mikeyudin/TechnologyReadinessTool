@@ -75,6 +75,7 @@ public class Criteria {
 
 	/**
 	 * Returns the limit upon the number of rows to be retrieved.
+	 * @return Maximum number of results to display on a single page.
 	 */
 	@XmlElement(required = true)
 	public Integer getPageSize() {

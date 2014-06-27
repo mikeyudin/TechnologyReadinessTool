@@ -110,6 +110,7 @@ public class ServiceContext implements Serializable {
 	/**
 	 * Sets the scope for this service context. The scope is used to control the visibility of data and to allow tailoring of
 	 * the service behavior.
+	 * @param scope New scope for the context
 	 */
 	public void setScope(Scope scope) {
 		this.scope = scope;
@@ -117,13 +118,15 @@ public class ServiceContext implements Serializable {
 
 	/**
 	 * Sets the user for this service context.
+	 * @param user New user for the context
 	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
 
 	/**
-	 * Sets the org for this service context.
+	 * Sets the organization for this service context.
+	 * @param org New organization for the context
 	 */
 	public void setOrg(Org org) {
 		this.org = org;

@@ -27,13 +27,10 @@ public interface BaseDataRetriever {
 	 * Finds number of rows that will be returned for a given report if there were no pagination involved. This is done by
 	 * determining the number of Child Organizations that belong to a parent organization. As all the reports are access thru
 	 * a parent organization, this approach will will.
-	 * 
-	 * @param districtOrg
-	 *            the district org
+	 * @param org Organization to use for the data set.
 	 * @param scope
 	 *            the scope
-	 * @param snapshotWindow
-	 *            the window for which the snapshot is to be completed
+	 * @return Number of records in the data set.
 	 */
 	Integer findTotalCount(OrgDO org, ScopeDO scope);
 
@@ -53,14 +50,9 @@ public interface BaseDataRetriever {
 	 *     orgCode - The code of the State Level Organization	
 	 * </code>
 	 * </pre>
-	 * 
-	 * @param rootOrg
-	 *            The Root Org for Readiness.
-	 * @param consortiumScope
-	 *            The scope that is tied to the Consortium. This is used to retrieve the organizations that belong to a
-	 *            consortium.
-	 * @param window
-	 *            The window for which the percent of passing devices is desired.
+	 * @param snapshotWindowId The snapshot window to retrieve data for.
+	 * @param orgId The organization to retrieve data for.
+	 * @param minimumOrRecommendedFlag Controls the type of data returned for the snapshot.
 	 * @return The Map of data that contains the information about State Device Assessment data.
 	 * @throws SQLException
 	 *             the sQL exception
@@ -80,11 +72,12 @@ public interface BaseDataRetriever {
 	 *     orgCode - The code of the State Level Organization
 	 * </code>
 	 * </pre>
-	 * 
-	 * @param parentOrgDO
-	 *            the parent org for which to get the child report data for.
-	 * @param snapshotWindowDO
-	 *            the snapshot window for which to retrieve the data from.
+	 * @param snapshotWindowId The snapshot window to retrieve data for.
+	 * @param orgId Id of the organization to retrieve data for.
+	 * @param minimumOrRecommendedFlag Determines if Minimum or Recommended snapshot information is returned.
+	 * @param retrieveAll If true paging parameters are ignored.
+	 * @param startingRow Index of the first result to return.
+	 * @param numberOfRows Maximum number of rows to return.
 	 * @return The Map of data that contains the information about Device Assessment data.
 	 * @throws SQLException
 	 *             the SQL exception
@@ -129,12 +122,7 @@ public interface BaseDataRetriever {
 	 *     
 	 * </code>
 	 * </pre>
-	 * 
-	 * @param consortiumScope
-	 *            The scope that is tied to the Consortium. Minimum recommended values are stored by consortium scope. a
-	 *            consortium.
-	 * @param normalSandBoxMode
-	 *            Indicates to see if this is for normal usage or sandbox usage.
+	 * @param snapshotWindowId The snapshot window
 	 * @return The Map of data that contains the information about District Level Device Assessment data.
 	 * @throws SQLException
 	 *             the sQL exception
@@ -147,6 +135,7 @@ public interface BaseDataRetriever {
 	 * 
 	 * @param snapshotWindowId
 	 *            The id of the snapshot window to for which to create the rollup data.
+	 * @param fullRefresh If true all data will be re-calculated. If false, only deltas are recalculated.
 	 */
 	void createSnapshotRollup(Long snapshotWindowId, boolean fullRefresh);
 

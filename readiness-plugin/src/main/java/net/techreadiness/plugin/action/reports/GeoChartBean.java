@@ -13,13 +13,17 @@ import com.google.common.collect.Lists;
  * For this Bean to be used, you must include the following in the <head> tag on your page:
  * {@code <script type='text/javascript' src='https://www.google.com/jsapi'></script>}
  *
- * You will also need to add a div to the page where the chart will go, like this: <div id='mapDiv'></div>
+ * You will also need to add a div to the page where the chart will go, like
+ * this: <div id='mapDiv'></div>
  *
- * There is an option onSelect event that can be captured. You can set the onSelectMethodName in this bean. Then you would
- * define that method on the page. Use code similar to this to view the selection: var selection = geoChart.getSelection();
- * alert('You selected ' + geoData.getRowProperty(selection[0].row, 'stateCode'));
+ * There is an option onSelect event that can be captured. You can set the
+ * onSelectMethodName in this bean. Then you would define that method on the
+ * page. Use code similar to this to view the selection: var selection =
+ * geoChart.getSelection(); alert('You selected ' +
+ * geoData.getRowProperty(selection[0].row, 'stateCode'));
  *
- * geoChart is the variable name of the chart object and geoData is the name of the DataTable used in the chart.
+ * geoChart is the variable name of the chart object and geoData is the name of
+ * the DataTable used in the chart.
  *
  */
 public class GeoChartBean {
@@ -42,10 +46,12 @@ public class GeoChartBean {
 
 	protected boolean legend;
 
-	private static final List<String> ST_WHITE_LIST = Lists.newArrayList("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE",
-			"FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT",
-			"NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT",
-			"VT", "VA", "WA", "WV", "WI", "WY");
+	private static final List<String> ST_WHITE_LIST = Lists.newArrayList("AL",
+			"AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID",
+			"IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN",
+			"MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND",
+			"OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
+			"VA", "WA", "WV", "WI", "WY");
 
 	public GeoChartBean() {
 		width = 1060;
@@ -64,7 +70,11 @@ public class GeoChartBean {
 	}
 
 	/**
-	 * This is the id of the div the chart will be placed in. Defaults to "mapDiv"
+	 * This is the id of the element the chart will be placed in. Defaults to
+	 * "mapDiv"
+	 * 
+	 * @param chartDiv
+	 *            HTML id attribute of the element the map should be created in.
 	 *
 	 */
 	public void setChartDiv(String chartDiv) {
@@ -77,6 +87,9 @@ public class GeoChartBean {
 
 	/**
 	 * The width of the chart in px
+	 * 
+	 * @param width
+	 *            Width of the chart in pixels.
 	 *
 	 */
 	public void setWidth(int width) {
@@ -89,6 +102,9 @@ public class GeoChartBean {
 
 	/**
 	 * The height of the chart in px
+	 * 
+	 * @param height
+	 *            Height of the chart in pixels.
 	 *
 	 */
 	public void setHeight(int height) {
@@ -100,7 +116,11 @@ public class GeoChartBean {
 	}
 
 	/**
-	 * The background color for the chart. Must be in the format "#RRGGBB" Defaults to "#FFFFFF"
+	 * The background color for the chart. Must be in the format "#RRGGBB"
+	 * Defaults to "#FFFFFF"
+	 * 
+	 * @param backgroundColor
+	 *            Hex value of the background color.
 	 *
 	 */
 	public void setBackgroundColor(String backgroundColor) {
@@ -112,8 +132,11 @@ public class GeoChartBean {
 	}
 
 	/**
-	 * Adds colors to be used in the gradient. Calling this method also resets old color assignment. Colors must be in the
-	 * format "#RRGGBB"
+	 * Adds colors to be used in the gradient. Calling this method also resets
+	 * old color assignment. Colors must be in the format "#RRGGBB"
+	 * 
+	 * @param colors
+	 *            Hex color values to be used for the chart.
 	 *
 	 */
 	public void addColor(String... colors) {
@@ -137,6 +160,9 @@ public class GeoChartBean {
 
 	/**
 	 * Used to set the label on the hover-over
+	 * 
+	 * @param hoverLabel
+	 *            Label the chart should display.
 	 *
 	 */
 	public void setHoverLabel(String hoverLabel) {
@@ -144,8 +170,11 @@ public class GeoChartBean {
 	}
 
 	/**
-	 * The color that the chart assigns to the regions not specified in the data. Must be in the format "#RRGGBB" Defaults to
-	 * "#E5E5E5"
+	 * The color that the chart assigns to the regions not specified in the
+	 * data. Must be in the format "#RRGGBB" Defaults to "#E5E5E5"
+	 * 
+	 * @param datalessRegionColor
+	 *            Hex color value for regions that do not have data.
 	 *
 	 */
 	public void setDatalessRegionColor(String datalessRegionColor) {
@@ -165,7 +194,8 @@ public class GeoChartBean {
 		this.data.add(d);
 	}
 
-	public void addBooleanData(String id, String state, String code, String label) {
+	public void addBooleanData(String id, String state, String code,
+			String label) {
 		Data d = new Data();
 		d.id = id;
 		d.state = state;
@@ -177,6 +207,9 @@ public class GeoChartBean {
 
 	/**
 	 * Adds data to be used in the chart.
+	 * 
+	 * @param id
+	 *            Identifier for the piece of data.
 	 *
 	 * @param state
 	 *            Name of the state, ex. Iowa, Ohio, Texas
@@ -199,7 +232,8 @@ public class GeoChartBean {
 					d.data = getData(-1);
 					d.formattedValue = "";
 				} else {
-					d.data = getData(Long.valueOf(StringUtils.remove(data, '%')));
+					d.data = getData(Long
+							.valueOf(StringUtils.remove(data, '%')));
 					d.formattedValue = data;
 				}
 			}
@@ -252,8 +286,10 @@ public class GeoChartBean {
 	}
 
 	/**
-	 * The name of the function called when a region is selected. To disable this functionality call
-	 * onSelectMethodName(null). This method name defaults to "geoChartSelectHandler"
+	 * The name of the function called when a region is selected. To disable
+	 * this functionality call onSelectMethodName(null). This method name
+	 * defaults to "geoChartSelectHandler"
+	 * @param onSelectMethodName JavaScript function name that will be called when a region is clicked.
 	 *
 	 */
 	public void setOnSelectMethodName(String onSelectMethodName) {
@@ -275,8 +311,8 @@ public class GeoChartBean {
 	}
 
 	/**
-	 * You will call this method on the page. It builds the JavaScript needed for the chart. It will create its own <script>
-	 * tags.
+	 * You will call this method on the page. It builds the JavaScript needed
+	 * for the chart. It will create its own <script> tags.
 	 *
 	 * @return JavaScript that loads the Google GeoChart.
 	 */
@@ -284,30 +320,41 @@ public class GeoChartBean {
 		final String LB = "\r\n";
 		StringBuilder sb = new StringBuilder(512);
 		sb.append("var geoChart, geoData;").append(LB);
-		sb.append("google.load('visualization', '1', {'packages': ['geochart']});").append(LB);
+		sb.append(
+				"google.load('visualization', '1', {'packages': ['geochart']});")
+				.append(LB);
 		sb.append("google.setOnLoadCallback(drawMap);").append(LB).append(LB);
 
 		sb.append("function drawMap() {").append(LB);
 		sb.append("geoData = new google.visualization.DataTable();").append(LB);
-		sb.append("geoData.addRows(").append(data.size()).append(");").append(LB);
+		sb.append("geoData.addRows(").append(data.size()).append(");")
+				.append(LB);
 		sb.append("geoData.addColumn('string', 'State');").append(LB);
-		sb.append("geoData.addColumn('number', '" + (hoverLabel == null ? "Percent" : hoverLabel) + "');").append(LB);
+		sb.append(
+				"geoData.addColumn('number', '"
+						+ (hoverLabel == null ? "Percent" : hoverLabel) + "');")
+				.append(LB);
 
 		int count = 0;
 		for (Data data : this.data) {
-			sb.append("geoData.setValue(").append(count).append(", 0, '").append(data.state).append("');").append(LB);
-			sb.append("geoData.setValue(").append(count).append(", 1, ").append(data.data).append(");").append(LB);
-			sb.append("geoData.setFormattedValue(").append(count).append(", 1, '").append(data.formattedValue).append("');")
-			.append(LB);
-			sb.append("geoData.setRowProperty(").append(count).append(", 'stateCode', '").append(data.id).append("');")
-			.append(LB);
+			sb.append("geoData.setValue(").append(count).append(", 0, '")
+					.append(data.state).append("');").append(LB);
+			sb.append("geoData.setValue(").append(count).append(", 1, ")
+					.append(data.data).append(");").append(LB);
+			sb.append("geoData.setFormattedValue(").append(count)
+					.append(", 1, '").append(data.formattedValue).append("');")
+					.append(LB);
+			sb.append("geoData.setRowProperty(").append(count)
+					.append(", 'stateCode', '").append(data.id).append("');")
+					.append(LB);
 			count++;
 		}
 
 		sb.append("var options = {};").append(LB);
 		sb.append("options['region'] = 'US';").append(LB);
 		sb.append("options['resolution'] = 'provinces';").append(LB);
-		sb.append("options['colorAxis'] = { minValue : 0, maxValue : ").append(colors.size() - 1).append(", colors : [");
+		sb.append("options['colorAxis'] = { minValue : 0, maxValue : ")
+				.append(colors.size() - 1).append(", colors : [");
 
 		for (String color : colors) {
 			sb.append("'").append(color).append("',");
@@ -316,19 +363,23 @@ public class GeoChartBean {
 			sb.setLength(sb.length() - 1);
 		}
 		sb.append("]};").append(LB);
-		sb.append("options['backgroundColor'] = '").append(backgroundColor).append("';").append(LB);
-		sb.append("options['datalessRegionColor'] = '").append(datalessRegionColor).append("';").append(LB);
+		sb.append("options['backgroundColor'] = '").append(backgroundColor)
+				.append("';").append(LB);
+		sb.append("options['datalessRegionColor'] = '")
+				.append(datalessRegionColor).append("';").append(LB);
 		sb.append("options['width'] = ").append(width).append(";").append(LB);
 		sb.append("options['height'] = ").append(height).append(";").append(LB);
 		if (!legend) {
 			sb.append("options['legend'] = 'none';").append(LB);
 		}
-		sb.append("geoChart = new google.visualization.GeoChart(document.getElementById('").append(chartDiv).append("'));")
-		.append(LB);
+		sb.append(
+				"geoChart = new google.visualization.GeoChart(document.getElementById('")
+				.append(chartDiv).append("'));").append(LB);
 		sb.append("geoChart.draw(geoData, options);").append(LB);
 		if (onSelectMethodName != null && !onSelectMethodName.equals("")) {
-			sb.append("google.visualization.events.addListener(geoChart, 'select', ").append(onSelectMethodName)
-			.append("); ").append(LB);
+			sb.append(
+					"google.visualization.events.addListener(geoChart, 'select', ")
+					.append(onSelectMethodName).append("); ").append(LB);
 		}
 		sb.append("}");
 
@@ -343,10 +394,11 @@ public class GeoChartBean {
 		// append colors
 		if (colors != null && !colors.isEmpty()) {
 			sb.append("&chco=")
-			.append(datalessRegionColor.startsWith("#") ? datalessRegionColor.substring(1) : datalessRegionColor)
-			.append(",");
+					.append(datalessRegionColor.startsWith("#") ? datalessRegionColor
+							.substring(1) : datalessRegionColor).append(",");
 			for (String color : colors) {
-				sb.append(color.startsWith("#") ? color.substring(1) : color).append(",");
+				sb.append(color.startsWith("#") ? color.substring(1) : color)
+						.append(",");
 			}
 			sb.setLength(sb.length() - 1);
 		}
@@ -382,7 +434,7 @@ public class GeoChartBean {
 			}
 		}
 		return GOOGLE_URL + "cht=map&chld=US-DC&chs=75x75&chco=FFFFFF|"
-		+ (color.startsWith("#") ? color.substring(1) : color);
+				+ (color.startsWith("#") ? color.substring(1) : color);
 	}
 
 	private static int getData(double data) {

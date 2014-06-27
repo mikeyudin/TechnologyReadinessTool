@@ -7,6 +7,7 @@ import java.util.Iterator;
 /**
  * 
  * A Collection wrapper which allows observation of added and removed elements via an ElementObserver
+ * @param <T> Type of object in the collection
  * 
  */
 public class ObservableCollection<T> extends AbstractCollection<T> implements ElementObserver<T> {

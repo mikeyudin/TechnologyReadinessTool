@@ -16,6 +16,8 @@ import com.google.common.collect.Multiset;
 /**
  * 
  * A Multimap wrapper which allows observation of added and removed elements via an ElementObserver
+ * @param <K> The type of keys for the map
+ * @param <V> The type of values for the map
  * 
  */
 public class ObservableMultimap<K, V> extends ForwardingMultimap<K, V> implements Serializable {

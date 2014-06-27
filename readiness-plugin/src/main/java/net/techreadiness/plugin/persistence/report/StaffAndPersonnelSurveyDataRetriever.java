@@ -39,6 +39,7 @@ public interface StaffAndPersonnelSurveyDataRetriever extends BaseDataRetriever 
 	 *            The Root Org for Readiness.
 	 * @param snapshotWindowId
 	 *            The window for which the percent of passing devices is desired.
+	 * @param surveyQuestionTypeCode The question to return data for
 	 * @return The Map of data that contains the information about State Device Assessment data.
 	 * @throws SQLException
 	 *             the sQL exception
@@ -60,9 +61,13 @@ public interface StaffAndPersonnelSurveyDataRetriever extends BaseDataRetriever 
 	 * </pre>
 	 *
 	 * @param orgId
-	 *            the parent org for which to get the child report data for.
+	 *            the parent organization for which to get the child report data for.
 	 * @param snapshotWindowId
 	 *            the snapshot window for which to retrieve the data from.
+	 * @param surveyQuestionTypeCode Survey question to retrieve data for.
+	 * @param retrieveAll If true paging parameters are ignored
+	 * @param startingRow Index of the first result to be returned
+	 * @param numberOfRows Maximum number of records to return
 	 * @return The Map of data that contains the information about Device Assessment data.
 	 * @throws SQLException
 	 *             the sQL exception

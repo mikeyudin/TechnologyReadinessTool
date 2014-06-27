@@ -672,6 +672,7 @@ public class DataGridTag<T> extends ParentTag implements DataGrid<T>, Serializab
 
 	/**
 	 * update
+	 * @param row Object displayed in the row
 	 * 
 	 * @return true if the selection was updated.
 	 */
