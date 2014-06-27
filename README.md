@@ -112,7 +112,7 @@ Add a resource element to Tomcat’s [tomcat_home]/conf/context.xml file.
       password="[db_password]"
       type="javax.sql.DataSource"
       url="jdbc:mysql://localhost:3306/[schema_name]"
-      validationQuery="/* ping */" />
+      validationQuery="/* ping */ select 1" />
 ```
 
 ## Database
