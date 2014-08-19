@@ -12,6 +12,12 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+            <dependency>
+                    <groupId>mysql</groupId>
+                    <artifactId>mysql-connector-java</artifactId>
+                    <version>5.1.31</version>
+            </dependency>
+
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>readiness-core</artifactId>
