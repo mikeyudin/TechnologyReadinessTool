@@ -317,8 +317,9 @@ public class UserDAOImpl extends BaseDAOImpl<UserDO> implements UserDAO {
 	private String buildUrlString() {
 		URL url;
 		try {
-			url = new URL(protocol.trim(), host.trim(), Integer.valueOf(port.trim()), contextPath.trim());
-			return url.toExternalForm();
+			//url = new URL(protocol.trim(), host.trim(), contextPath.trim());
+			//return url.toExternalForm();
+                        return protocol.trim() + "://" + host.trim() + contextPath.trim();
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
