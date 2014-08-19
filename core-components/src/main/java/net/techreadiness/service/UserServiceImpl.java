@@ -67,12 +67,20 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.common.collect.Lists;
 
+import java.io.UnsupportedEncodingException;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 @WebService
 @Service
 @Transactional
 public class UserServiceImpl extends BaseServiceWithValidationAndExt<UserDO, AbstractAuditedBaseEntityWithExt<UserDO>>
 implements UserService {
 
+        private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5', '6', '7', '8',
+                                                '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        
 	@Inject
 	@Qualifier("userExtDAOImpl")
 	private ExtDAO<UserDO, AbstractAuditedBaseEntityWithExt<UserDO>> userExtDAO;
@@ -534,8 +542,21 @@ implements UserService {
 			faultInfo.setAttributeErrors(errors);
 			throw new ValidationServiceException(faultInfo);
 		}
-
-		userDAO.changePassword(username, BCrypt.hashpw(password, BCrypt.gensalt()));
+                
+                try {
+                    String encryptedPass = "";
+                    byte[] passByte;
+                    passByte = password.getBytes("UTF-8");
+                    
+                    MessageDigest md = MessageDigest.getInstance("SHA-1");
+                    passByte = md.digest(passByte);
+                    userDAO.changePassword(username, getFormattedText(passByte));
+                } catch (NoSuchAlgorithmException e) {
+                    return;
+                } catch (UnsupportedEncodingException e) {
+                    return;
+                }
+		//userDAO.changePassword(username, BCrypt.hashpw(password, BCrypt.gensalt()));
 	}
 
 	@Override
@@ -639,4 +660,20 @@ implements UserService {
 		query.setParameter("userIds", userIds);
 		return getMappingService().getMapper().mapAsSet(query.getResultList(), User.class);
 	}
+        
+        /**
+         * Takes the raw bytes from the digest and formats them correct.
+         *
+         * @param bytes the raw bytes from the digest.
+         * @return the formatted bytes.
+         */
+        private String getFormattedText(final byte[] bytes) {
+            final StringBuilder buf = new StringBuilder(bytes.length * 2);
+
+            for (int j = 0; j < bytes.length; j++) {
+                buf.append(HEX_DIGITS[(bytes[j] >> 4) & 0x0f]);
+                buf.append(HEX_DIGITS[bytes[j] & 0x0f]);
+            }
+            return buf.toString();
+        }
 }
