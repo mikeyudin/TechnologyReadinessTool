@@ -51,15 +51,11 @@
 			<button type="submit" class="btn btn-default btn-xs">
 				<fmt:message bundle="${msg}" key="request.password.reset" />
 			</button>
-			<a href="${pageContext.request.contextPath}" class="btn btn-default btn-xs"><fmt:message bundle="${msg}" key="cancel" /></a>
+			<a href="${pageContext.request.contextPath}/" class="btn btn-default btn-xs"><fmt:message bundle="${msg}" key="cancel" /></a>
 		</form>
 
 		<div class="text-center readiness-logos">
-			<img src="${pageContext.request.contextPath}/static/images/sbac-logo.png"> <img
-				src="${pageContext.request.contextPath}/static/images/parcc-logo.png">
-		</div>
-		<div class="text-center readiness-logos">
-			<img src="${pageContext.request.contextPath}/static/images/setda-logo.png">
+                    <img src="${pageContext.request.contextPath}/static/images/nysed.jpg" /> 
 		</div>
 	</div>
 </body>

@@ -182,11 +182,14 @@
 						<div id="background-layer-delta-sub-six"></div>
 					</div>
 					<div id="footer-alpha" class="footer ui-helper-clearfix">
-						<div id="container-content-beta">
+                                        <div class="text-center readiness-logos">
+                                            <img src="${pageContext.request.contextPath}/static/images/nysed.jpg" /> 
+                                        </div>
+						<%--div id="container-content-beta">
 							<a href="http://www.k12.wa.us/smarter" target="_blank" class="logo logo-sbac"></a>
 							<a href="http://www.parcconline.org" target="_blank" class="logo logo-parcc"></a>
 							<a href="http://www.setda.org" target="_blank" class="logo logo-setda"></a>
-						</div>
+						</div--%>
 					</div>
 				</div>
 			</div>
