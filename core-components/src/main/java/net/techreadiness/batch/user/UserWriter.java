@@ -98,7 +98,7 @@ public class UserWriter extends BaseItemWriter implements ItemWriter<UserData> {
 			if (errors.isEmpty()) {
 				if ("c".equalsIgnoreCase(userData.getAction())) {
 					// Wait to send an email in case the transaction rolls back
-					userService.newAccountPassword(serviceContext, user);
+					//userService.newAccountPassword(serviceContext, user);
 				}
 			} else {
 				ValidationServiceException e = new ValidationServiceException(new FaultInfo());
